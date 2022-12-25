@@ -1,0 +1,88 @@
+.td-input-wrapper {
+  display: flex;
+  border: 1px solid #d9d9d9;
+  width: 100%;
+}
+
+.td-input-wrapper .td-input:focus,
+.td-input-wrapper .td-input:active,
+.td-input-wrapper .td-input:target,
+.td-input-wrapper .td-input:focus-visible .td-input-wrapper {
+  border-color: #00b0ff;
+  box-shadow: 0 0 0.25rem 0.05rem #00b0ff;
+}
+.td-input-wrapper .input-addon {
+  padding: 4px;
+}
+.input-addon.before {
+  border-right: 1px solid #d9d9d9;
+}
+.input-addon.after {
+  border-left: 1px solid #d9d9d9;
+}
+
+.td-input {
+  outline: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.td-input-wrapper .td-input-password:focus,
+.td-input-wrapper .td-input-password:active,
+.td-input-wrapper .td-input-password:target,
+.td-input-wrapper .td-input-password:focus-visible .td-input-wrapper {
+  border-color: #00b0ff;
+  box-shadow: 0 0 0.25rem 0.05rem #00b0ff;
+}
+.td-input-password {
+  outline: none;
+  padding: 4px 8px;
+  border-radius: 4px;
+  width: 100%;
+}
+.td-textarea-wrapper {
+  outline: none;
+}
+.td-textarea-wrapper .count-textarea {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.input-search {
+  border-radius: 4px;
+}
+
+.td-auto-complete {
+  border: 1px solid #d9d9d9;
+  border-radius: 4px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.td-auto-complete input:focus,
+.td-auto-complete input:active,
+.td-auto-complete input:target,
+.td-auto-complete input:focus-visible .td-auto-complete {
+  border-color: #00b0ff;
+  box-shadow: 0 0 0.25rem 0.05rem #00b0ff;
+}
+
+.suggestion-active {
+  background-color: #00b0ff;
+}
+
+.select-autocomplete {
+  margin-top: 6px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+}
+
+.select-autocomplete .option {
+  padding: 8px;
+}
+
+.select-autocomplete .option:hover {
+  background-color: #f1f1f1;
+}
