@@ -15,4 +15,4 @@ export const configuration: ConfigurationValidator = {
   API_TIMEOUT_REQUEST: 20000
 };
 
-export const urlApiServices = process.env.REACT_APP_API;
+export const urlApiServices = 'http://194.163.190.91:8044';

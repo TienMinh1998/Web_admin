@@ -4,15 +4,15 @@ import { Navigate, Outlet, RouteObject } from 'react-router-dom';
 import { CliCookieService, CLI_COOKIE_KEYS } from 'shared/services/cli-cookie';
 import { PROTECTED_ROUTES_PATH } from './RoutesPath';
 import { NotificationPage } from 'features/notification';
-import { CategoryPage, ProductStorePage } from 'features/question';
+import { ProductStorePage, TopicPage, UpdateTopic } from 'features/question';
 import { UpdateProduct } from 'features/question/product/pages/UpdateProduct';
+import { CoursePage, UpdateCourse } from 'features/course';
 
 export const ProtectedRoutes: RouteObject[] = [
   {
     path: PROTECTED_ROUTES_PATH.HOME,
     element: <HomePage />
   },
-
   {
     path: PROTECTED_ROUTES_PATH.QUESTION,
     element: <Outlet />,
@@ -32,8 +32,40 @@ export const ProtectedRoutes: RouteObject[] = [
     ]
   },
   {
-    path: PROTECTED_ROUTES_PATH.CATEGORY_QUESTION,
-    element: <CategoryPage />
+    path: PROTECTED_ROUTES_PATH.COURSE,
+    element: <Outlet />,
+    children: [
+      {
+        path: '',
+        element: <CoursePage />
+      },
+      {
+        path: 'add',
+        element: <UpdateCourse />
+      },
+      {
+        path: ':id',
+        element: <UpdateCourse />
+      }
+    ]
+  },
+  {
+    path: PROTECTED_ROUTES_PATH.TOPIC_QUESTION,
+    element: <Outlet />,
+    children: [
+      {
+        path: '',
+        element: <TopicPage />
+      },
+      {
+        path: 'add',
+        element: <UpdateTopic />
+      },
+      {
+        path: ':id',
+        element: <UpdateTopic />
+      }
+    ]
   },
   {
     path: PROTECTED_ROUTES_PATH.NOTIFICATION,

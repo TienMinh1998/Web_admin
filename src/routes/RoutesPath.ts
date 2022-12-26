@@ -1,6 +1,7 @@
 export const PROTECTED_ROUTES_PATH = {
   HOME: '/',
-  CATEGORY_QUESTION: '/category-question',
+  TOPIC_QUESTION: '/topic-question',
+  COURSE: '/course',
   QUESTION: '/question',
   NOTIFICATION: '/notification'
 };

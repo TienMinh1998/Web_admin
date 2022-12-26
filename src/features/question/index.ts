@@ -1,4 +1,5 @@
 import { ProductStorePage } from './product/pages/ProductStorePage';
-import { CategoryPage } from './category/pages/CategoryPage';
+import { TopicPage } from './category/pages/TopicPage';
+import { UpdateTopic } from './category/pages/UpdateTopic';
 
-export { ProductStorePage, CategoryPage };
+export { ProductStorePage, TopicPage, UpdateTopic };

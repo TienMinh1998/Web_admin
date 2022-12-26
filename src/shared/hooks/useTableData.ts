@@ -28,11 +28,11 @@ export const useTableData = ({ expandFilter = {}, fetchList }: IUseTableData) =>
           ...expandFilter
         });
 
-        setdataSource(data.list?.items || []);
+        setdataSource(data?.items || []);
 
         setPaging({
           ...paging,
-          total: data.list?.totalCount,
+          total: data?.totalCount,
           currentPage: data?.currentPage
         });
       }

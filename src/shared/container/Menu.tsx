@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { AiFillHome } from 'react-icons/ai';
 import { BiCategoryAlt } from 'react-icons/bi';
+import { MdOutlineTopic } from 'react-icons/md';
 import { BsFillPatchQuestionFill } from 'react-icons/bs';
 import { PROTECTED_ROUTES_PATH } from 'routes/RoutesPath';
 import { TGroupMenu } from 'shared/types/interface';
@@ -17,9 +18,14 @@ const MENU: Array<TGroupMenu> = [
     keyGroup: '5',
     groupMenu: [
       {
-        title: 'Topic question',
-        to: PROTECTED_ROUTES_PATH.CATEGORY_QUESTION,
+        title: 'Course',
+        to: PROTECTED_ROUTES_PATH.COURSE,
         icon: <BiCategoryAlt />
+      },
+      {
+        title: 'Topic question',
+        to: PROTECTED_ROUTES_PATH.TOPIC_QUESTION,
+        icon: <MdOutlineTopic />
       },
       {
         title: 'Questions',

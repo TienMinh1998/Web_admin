@@ -10,11 +10,7 @@ import { WhiteBoxWrapper } from 'shared/components/common';
 import { FormFieldComponent } from 'shared/components/Form';
 import { TField } from 'shared/components/Form/interface';
 import * as Yup from 'yup';
-import {
-  requestCreateQuestion,
-  requestDetailQuestion,
-  requestUpdateQuestion
-} from '../api/question.api';
+import { requestCreateCourse, requestDetailCourse, requestUpdateCourse } from '../api/course.api';
 
 const beforeUpload = (file: RcFile) => {
   const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
@@ -29,55 +25,47 @@ const beforeUpload = (file: RcFile) => {
 };
 
 const validateSchema = {
-  english: Yup.string().required('Hãy nhập từ vựng')
+  code: Yup.string().required('Hãy nhập từ vựng')
 };
-export const UpdateProduct: React.FC = () => {
+export const UpdateCourse: React.FC = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(false);
   const [valueFormField, setValueFormField] = useState({
-    english: '',
-    phonetic: '',
-    meaningEnglish: '',
-    meaningVietNam: '',
-    note: ''
+    code: '',
+    title: '',
+    content: '',
+    target: ''
   });
 
   const [formField, setFormField] = useState<Record<string, TField>>({
-    english: {
-      nameField: 'english',
+    code: {
+      nameField: 'code',
       className: 'col-span-6',
-      label: '<span style="color:red">*</span> Từ vựng',
+      label: 'Mã khóa học',
       component: 'Input',
-      placeholder: 'Nhập từ vựng'
+      placeholder: 'Nhập mã khóa học'
     },
-    phonetic: {
-      nameField: 'phonetic',
+    title: {
+      nameField: 'title',
       className: 'col-span-6',
-      label: 'Phiên âm',
-      component: 'TextArea',
-      placeholder: 'Nhập phiên âm'
+      label: 'Tên khóa học',
+      component: 'Input',
+      placeholder: 'Nhập tên khóa học'
     },
-    meaningEnglish: {
-      nameField: 'meaningEnglish',
+    target: {
+      nameField: 'target',
       className: 'col-span-6',
-      label: ' Nghĩa Tiếng Anh',
+      label: ' Mục tiêu',
       component: 'TextArea',
-      placeholder: 'Nhập nghĩa Tiếng Anh'
+      placeholder: 'Nhập mục tiêu khóa học'
     },
-    meaningVietNam: {
-      nameField: 'meaningVietNam',
+    content: {
+      nameField: 'content',
       className: 'col-span-6',
-      label: 'Nghĩa Tiếng Việt',
+      label: 'Nội dung khóa học',
       component: 'TextArea',
-      placeholder: 'Nhập nghĩa Tiếng Việt'
-    },
-    note: {
-      nameField: 'note',
-      className: 'col-span-12',
-      label: 'Ghi chú',
-      component: 'TextArea',
-      placeholder: 'Nhập ghi chú'
+      placeholder: 'Nhập nội dung khóa học'
     }
   });
 
@@ -91,13 +79,13 @@ export const UpdateProduct: React.FC = () => {
     try {
       const dataPush = { ...values, id };
       if (id) {
-        requestUpdateQuestion(dataPush);
-        toast.success('Cập nhật từ vựng thành công!');
-        navigate(PROTECTED_ROUTES_PATH.QUESTION);
+        requestUpdateCourse(dataPush);
+        toast.success('Cập nhật khóa học thành công!');
+        navigate(PROTECTED_ROUTES_PATH.COURSE);
       } else {
-        requestCreateQuestion(dataPush);
-        toast.success('Thêm từ vựng thành công!');
-        navigate(PROTECTED_ROUTES_PATH.QUESTION);
+        requestCreateCourse(dataPush);
+        toast.success('Thêm khóa học thành công!');
+        navigate(PROTECTED_ROUTES_PATH.COURSE);
       }
     } catch (error) {
       console.error('Exception ' + error);
@@ -106,7 +94,7 @@ export const UpdateProduct: React.FC = () => {
 
   const getDetailData = async () => {
     try {
-      const res = await requestDetailQuestion(id);
+      const res = await requestDetailCourse(id);
 
       setValueFormField(res.data);
     } catch (error) {
@@ -137,7 +125,7 @@ export const UpdateProduct: React.FC = () => {
               </WhiteBoxWrapper>
 
               <WhiteBoxWrapper>
-                <div className="text-lg font-bold">Thông tin từ vựng</div>
+                <div className="text-lg font-bold">Thông tin khóa học</div>
                 <FormFieldComponent formField={formField} formik={formik} />
               </WhiteBoxWrapper>
             </Form>

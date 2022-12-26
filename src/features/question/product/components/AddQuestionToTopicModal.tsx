@@ -3,9 +3,9 @@ import { useFormik } from 'formik';
 import React, { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import { Button } from 'shared/components/Button';
-import { requestAllCourse } from '../api/course.api';
+import { requestAllCourse } from '../../../course/api/course.api';
 import { requestAddQuestionToTopic } from '../api/question.api';
-import { requestAllTopicByCourseId } from '../api/topic.api';
+import { requestAllTopicByCourseId } from '../../category/api/topic.api';
 
 type Props = {
   visible: boolean;
@@ -63,7 +63,7 @@ export const AddQuestionToTopicModal: React.FC<Props> = ({
     initialValues: {
       ...dataUpdate
     },
-    onSubmit: async (values) => {
+    onSubmit: async (values: any) => {
       setLoading(true);
       try {
         console.log('values: ', values);
