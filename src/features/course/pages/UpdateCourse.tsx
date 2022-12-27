@@ -79,11 +79,11 @@ export const UpdateCourse: React.FC = () => {
     try {
       const dataPush = { ...values, id };
       if (id) {
-        requestUpdateCourse(dataPush);
+        await requestUpdateCourse(dataPush);
         toast.success('Cập nhật khóa học thành công!');
         navigate(PROTECTED_ROUTES_PATH.COURSE);
       } else {
-        requestCreateCourse(dataPush);
+        await requestCreateCourse(dataPush);
         toast.success('Thêm khóa học thành công!');
         navigate(PROTECTED_ROUTES_PATH.COURSE);
       }

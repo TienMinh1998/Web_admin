@@ -8,6 +8,9 @@ const URL_QUESTION = `${urlApiServices}`;
 export const requestAllTopicByCourseId = (payload: any): Promise<ResponseApi<any>> => {
   return ApiBaseService.post(`${URL_QUESTION}/GetTopicByCoursId`, payload);
 };
+export const requestTopicList = (payload: any): Promise<ResponseApi<any>> => {
+  return ApiBaseService.post(`${URL_QUESTION}/List-toppic`, payload);
+};
 export const requestCreateTopic = (payload: unknown): Promise<ResponseApi<any>> => {
   return ApiBaseService.post(`${URL_QUESTION}/AddTopic`, payload);
 };

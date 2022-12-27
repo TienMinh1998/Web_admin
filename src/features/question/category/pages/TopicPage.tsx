@@ -1,8 +1,8 @@
 import { DatePicker } from 'antd';
 import moment from 'moment';
-import { useNavigate } from 'react-router-dom';
 import React, { useState } from 'react';
 import { BiFilterAlt, BiPlusCircle } from 'react-icons/bi';
+import { useNavigate } from 'react-router-dom';
 import { PROTECTED_ROUTES_PATH } from 'routes/RoutesPath';
 import { Button, ButtonIcon } from 'shared/components/Button';
 import { HeaderPage, WhiteBoxWrapper } from 'shared/components/common';
@@ -13,7 +13,7 @@ import { Table } from 'shared/components/Table/Table';
 import { useTableData } from 'shared/hooks/useTableData';
 import { BaseSelect } from 'shared/styled-components';
 import { ORDER_STATUS } from 'shared/utils/filterData';
-import { requestAllTopicByCourseId } from '../api/topic.api';
+import { requestTopicList } from '../api/topic.api';
 
 const { RangePicker } = DatePicker;
 
@@ -24,7 +24,7 @@ export const TopicPage: React.FC = () => {
   const { dataSource, loading, paging, setPaging, showFilter, fetchDataSource, onToogleFilter } =
     useTableData({
       expandFilter,
-      fetchList: requestAllTopicByCourseId
+      fetchList: requestTopicList
     });
   const columns = [
     {
