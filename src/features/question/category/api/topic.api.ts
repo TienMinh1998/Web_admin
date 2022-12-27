@@ -22,3 +22,7 @@ export const requestDetailTopic = (id: string | undefined): Promise<ResponseApi<
 export const requestUpdateTopic = (payload: object): Promise<ResponseApi<any>> => {
   return ApiBaseService.put(`${URL_QUESTION}/UpdateTopic`, payload);
 };
+
+export const requestUploadImage = (payload: object): Promise<ResponseApi<any>> => {
+  return ApiBaseService.post(`${URL_QUESTION}/UploadImage`, payload);
+};

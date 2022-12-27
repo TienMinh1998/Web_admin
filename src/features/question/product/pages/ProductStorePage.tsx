@@ -14,7 +14,7 @@ import { AddQuestionToTopicModal } from '../components/AddQuestionToTopicModal';
 
 export const ProductStorePage: React.FC = () => {
   const navigate = useNavigate();
-  const [expandFilter, setExpandFilter] = useState<any>({});
+  const [expandFilter, setExpandFilter] = useState<any>({ columnSort: 'created_on', isDesc: true });
   const [searchText, setSearchText] = useState<string>('');
   const { dataSource, loading, paging, setPaging, fetchDataSource } = useTableData({
     expandFilter,
@@ -62,7 +62,7 @@ export const ProductStorePage: React.FC = () => {
     },
     {
       title: 'Created At',
-      keyData: 'createdAt',
+      keyData: 'created_on',
       render: (value: any) => <div>{moment(value).format('DD/MM/YYYY')}</div>
     },
     {

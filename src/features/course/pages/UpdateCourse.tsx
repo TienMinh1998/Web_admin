@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { PROTECTED_ROUTES_PATH } from 'routes/RoutesPath';
-import { Button } from 'shared/components/Button';
+import { Button, UploadImageButton } from 'shared/components/Button';
 import { WhiteBoxWrapper } from 'shared/components/common';
 import { FormFieldComponent } from 'shared/components/Form';
 import { TField } from 'shared/components/Form/interface';
@@ -42,9 +42,10 @@ export const UpdateCourse: React.FC = () => {
     code: {
       nameField: 'code',
       className: 'col-span-6',
-      label: 'Mã khóa học',
+      label: '<span style="color:red">*</span> Mã khóa học',
       component: 'Input',
-      placeholder: 'Nhập mã khóa học'
+      placeholder: 'Nhập mã khóa học',
+      disabled: id ? true : false
     },
     title: {
       nameField: 'title',
@@ -77,13 +78,24 @@ export const UpdateCourse: React.FC = () => {
 
   const onHandleSubmit = async (values: any) => {
     try {
-      const dataPush = { ...values, id };
+      const dataPush = { ...values };
+
+      const formData = new FormData();
+      Object.keys(dataPush).map((key: any) => {
+        if (!dataPush[key]) return;
+        if (key === 'coursImage') {
+          formData.append('file', dataPush[key]);
+          return;
+        }
+        formData.append(key, dataPush[key]);
+      });
+
       if (id) {
-        await requestUpdateCourse(dataPush);
+        await requestUpdateCourse(formData);
         toast.success('Cập nhật khóa học thành công!');
         navigate(PROTECTED_ROUTES_PATH.COURSE);
       } else {
-        await requestCreateCourse(dataPush);
+        await requestCreateCourse(formData);
         toast.success('Thêm khóa học thành công!');
         navigate(PROTECTED_ROUTES_PATH.COURSE);
       }
@@ -115,6 +127,21 @@ export const UpdateCourse: React.FC = () => {
         validationSchema={Yup.object(validateSchema)}
         onSubmit={onHandleSubmit}>
         {(formik: FormikProps<any>) => {
+          const handleChangeImage = async (file: any) => {
+            try {
+              setLoading(true);
+
+              formik.setFieldValue('coursImage', file);
+            } catch (error) {
+              console.error('Exception ' + error);
+            } finally {
+              setLoading(false);
+            }
+          };
+
+          const onCloseImage = () => {
+            formik.setFieldValue('coursImage', '');
+          };
           return (
             <Form>
               <WhiteBoxWrapper className="relative bottom-0 flex justify-between items-center flex-1">
@@ -124,10 +151,33 @@ export const UpdateCourse: React.FC = () => {
                 </Button>
               </WhiteBoxWrapper>
 
-              <WhiteBoxWrapper>
-                <div className="text-lg font-bold">Thông tin khóa học</div>
-                <FormFieldComponent formField={formField} formik={formik} />
-              </WhiteBoxWrapper>
+              <div className="grid grid-rows-1 grid-cols-4 gap-4 mt-2 ">
+                <div className="col-span-3">
+                  <WhiteBoxWrapper>
+                    <div className="text-lg font-bold">Thông tin khóa học</div>
+                    <FormFieldComponent formField={formField} formik={formik} />
+                  </WhiteBoxWrapper>
+                </div>
+
+                <div className="col-span-1">
+                  <WhiteBoxWrapper>
+                    <div className="font-bold">Ảnh chủ đề</div>
+
+                    <div className="flex justify-center my-4">
+                      <UploadImageButton
+                        loading={loading}
+                        src={formik.values.coursImage}
+                        onChangeImage={handleChangeImage}
+                        onClear={onCloseImage}
+                      />
+                    </div>
+                    <div className="text-center text-gray-500 font-semibold">
+                      <div>Chọn ảnh bìa cho course</div>
+                      <div>Chỉ ảnh *.png, *jpg and *jpeg được chấp nhận</div>
+                    </div>
+                  </WhiteBoxWrapper>
+                </div>
+              </div>
             </Form>
           );
         }}

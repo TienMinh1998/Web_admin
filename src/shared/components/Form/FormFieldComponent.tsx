@@ -94,6 +94,7 @@ export const FormFieldComponent: React.FC<TFormField> = ({ formField, formik }) 
                 normalize={(value: string) => {
                   return value && parseFloat(value);
                 }}
+                disabled={field.disabled}
               />
               <ErrorMessage name={field.nameField}>
                 {(msg) => <div className="text-red-400 mt-1">{msg}</div>}

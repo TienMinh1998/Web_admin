@@ -1,4 +1,5 @@
 import { DatePicker } from 'antd';
+import R from 'assets';
 import moment from 'moment';
 import React, { useState } from 'react';
 import { BiFilterAlt, BiPlusCircle } from 'react-icons/bi';
@@ -19,7 +20,7 @@ const { RangePicker } = DatePicker;
 
 export const TopicPage: React.FC = () => {
   const navigate = useNavigate();
-  const [expandFilter, setExpandFilter] = useState<any>({ userId: '' });
+  const [expandFilter, setExpandFilter] = useState<any>({ columnSort: 'created_on', isDesc: true });
   const [searchText, setSearchText] = useState<string>('');
   const { dataSource, loading, paging, setPaging, showFilter, fetchDataSource, onToogleFilter } =
     useTableData({
@@ -28,36 +29,31 @@ export const TopicPage: React.FC = () => {
     });
   const columns = [
     {
-      title: 'Mã KH',
-      keyData: 'code',
-      render: (value: string, index: number, record: any) => (
-        <div
-          className="font-semibold cursor-pointer text-primary-color"
-          onClick={() => {
-            goToDetail(record.pk_coursId);
-          }}>
-          {value}
+      title: 'Ảnh',
+      keyData: 'image',
+      render: (value: string) => (
+        <div className="w-[80px] h-[80px] flex justify-center items-center ">
+          <img
+            src={value || R.images.logo_ver1}
+            alt="img_product"
+            className="rounded object-contain max-w-full max-h-full"
+          />
         </div>
       )
     },
     {
-      title: 'Tên KH',
-      keyData: 'title',
-      render: (value: string) => <div className="font-semibold">{value}</div>
-    },
-    {
-      title: 'Mục tiêu',
-      keyData: 'target',
+      title: 'Nội dung Tiếng Anh',
+      keyData: 'englishContent',
       width: 250
     },
     {
-      title: 'Nội dung',
-      keyData: 'content',
+      title: 'Nội dung Tiếng Việt',
+      keyData: 'vietNamContent',
       width: 250
     },
     {
       title: 'Created At',
-      keyData: 'createdAt',
+      keyData: 'created_on',
       render: (value: any) => <div>{moment(value).format('DD/MM/YYYY')}</div>
     },
     {
@@ -69,7 +65,7 @@ export const TopicPage: React.FC = () => {
             <EditIcon
               className="text-xl cursor-pointer hover:text-green-500 "
               onClick={() => {
-                goToDetail(record.pk_coursId);
+                goToDetail(record.pK_Topic_Id);
               }}
             />
           </ButtonIcon>

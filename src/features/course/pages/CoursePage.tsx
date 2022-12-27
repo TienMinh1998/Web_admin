@@ -1,4 +1,5 @@
 import { Popconfirm } from 'antd';
+import R from 'assets';
 import moment from 'moment';
 import React, { useState } from 'react';
 import { BiPlusCircle } from 'react-icons/bi';
@@ -7,15 +8,14 @@ import { toast } from 'react-toastify';
 import { PROTECTED_ROUTES_PATH } from 'routes/RoutesPath';
 import { Button, ButtonIcon } from 'shared/components/Button';
 import { HeaderPage, WhiteBoxWrapper } from 'shared/components/common';
-import { DeleteIcon, EditIcon, SwitchIcon } from 'shared/components/Icons';
-import { InputSearch } from 'shared/components/Input';
+import { DeleteIcon, EditIcon } from 'shared/components/Icons';
 import { Table } from 'shared/components/Table/Table';
 import { useTableData } from 'shared/hooks/useTableData';
 import { requestCourseList, requestDeleteCourse } from '../api/course.api';
 
 export const CoursePage: React.FC = () => {
   const navigate = useNavigate();
-  const [expandFilter, setExpandFilter] = useState<any>({});
+  const [expandFilter, setExpandFilter] = useState<any>({ columnSort: 'created_on', isDesc: true });
   const [searchText, setSearchText] = useState<string>('');
   const { dataSource, loading, paging, setPaging, fetchDataSource } = useTableData({
     expandFilter,
@@ -41,6 +41,19 @@ export const CoursePage: React.FC = () => {
       render: (value: string) => <div className="font-semibold">{value}</div>
     },
     {
+      title: 'Ảnh',
+      keyData: 'coursImage',
+      render: (value: string) => (
+        <div className="w-[80px] h-[80px] flex justify-center items-center ">
+          <img
+            src={value}
+            alt="img_product"
+            className="rounded object-contain max-w-full max-h-full"
+          />
+        </div>
+      )
+    },
+    {
       title: 'Mục tiêu',
       keyData: 'target',
       width: 250
@@ -52,7 +65,7 @@ export const CoursePage: React.FC = () => {
     },
     {
       title: 'Created At',
-      keyData: 'createdAt',
+      keyData: 'created_on',
       render: (value: any) => <div>{moment(value).format('DD/MM/YYYY')}</div>
     },
     {

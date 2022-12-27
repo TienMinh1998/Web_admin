@@ -7,6 +7,7 @@ export type TField = {
   options?: Array<any>;
   rule?: any;
   handleValue?: () => void;
+  disabled?: boolean;
 };
 
 export type TFormField = {
