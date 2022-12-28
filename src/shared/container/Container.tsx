@@ -98,7 +98,7 @@ export const Container = ({ children }: { children?: React.ReactNode }) => {
             </div>
             <div className="border border-border-color--1 bg-border-color--1 mx-2"></div>
             <div>
-              <Avatar style={{ width: 36, height: 36 }} src={R.images.avatar_default} />
+              <Avatar style={{ width: 36, height: 36 }} src={R.images.ava_admin} />
               <span className="ml-2 font-semibold">Super Admin</span>
             </div>
           </div>
