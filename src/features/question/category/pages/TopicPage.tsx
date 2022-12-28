@@ -2,15 +2,13 @@ import { DatePicker, Popconfirm } from 'antd';
 import R from 'assets';
 import moment from 'moment';
 import React, { useState } from 'react';
-import { BiFilterAlt, BiPlusCircle } from 'react-icons/bi';
-import { useNavigate, useParams } from 'react-router-dom';
+import { BiPlusCircle } from 'react-icons/bi';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { PROTECTED_ROUTES_PATH } from 'routes/RoutesPath';
 import { Button, ButtonIcon } from 'shared/components/Button';
 import { HeaderPage, WhiteBoxWrapper } from 'shared/components/common';
-import FilterPage from 'shared/components/common/FilterPage';
 import { DeleteIcon, EditIcon } from 'shared/components/Icons';
-import { InputSearch } from 'shared/components/Input';
 import { Table } from 'shared/components/Table/Table';
 import { useTableData } from 'shared/hooks/useTableData';
 import { BaseSelect } from 'shared/styled-components';
@@ -21,13 +19,19 @@ const { RangePicker } = DatePicker;
 
 export const TopicPage: React.FC = () => {
   const navigate = useNavigate();
-  const { courseId } = useParams();
-  const [expandFilter, setExpandFilter] = useState<any>({ columnSort: 'created_on', isDesc: true });
+  const [searchParams, setSearchParams] = useSearchParams();
+  const courseIdParram = searchParams.get('courseId');
+  const [expandFilter, setExpandFilter] = useState<any>({
+    columnSort: 'created_on',
+    isDesc: true,
+    courseId: courseIdParram
+  });
   const [searchText, setSearchText] = useState<string>('');
   const { dataSource, loading, paging, setPaging, fetchDataSource } = useTableData({
     expandFilter,
     fetchList: requestTopicList
   });
+
   const columns = [
     {
       title: 'Ảnh',
