@@ -176,7 +176,7 @@ export const UpdateCourse: React.FC = () => {
                       />
                     </div>
                     <div className="text-center text-gray-500 font-semibold">
-                      <div>Chọn ảnh bìa cho course</div>
+                      <div>Chọn ảnh bìa cho khóa học</div>
                       <div>Chỉ ảnh *.png, *jpg and *jpeg được chấp nhận</div>
                     </div>
                   </WhiteBoxWrapper>

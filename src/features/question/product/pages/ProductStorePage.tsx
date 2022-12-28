@@ -1,6 +1,7 @@
 import { DatePicker } from 'antd';
 import moment from 'moment';
 import React, { useState } from 'react';
+import { AiOutlineCheckCircle } from 'react-icons/ai';
 import { BiFilterAlt, BiPlusCircle } from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';
 import { PROTECTED_ROUTES_PATH } from 'routes/RoutesPath';
@@ -36,12 +37,20 @@ export const ProductStorePage: React.FC = () => {
     {
       title: 'Từ vựng',
       keyData: 'english',
+      width: 200,
       render: (value: string, index: number, record: any) => (
         <div
-          className="font-semibold cursor-pointer text-primary-color"
+          className="font-semibold cursor-pointer text-primary-color flex items-center"
           onClick={() => {
             goToDetailProduct(record.pk_QuestionStandard_Id);
           }}>
+          {record.added ? (
+            <div className="mr-1">
+              <AiOutlineCheckCircle className="font-semibold text-green-500  text-xl" />
+            </div>
+          ) : (
+            <></>
+          )}
           {value}
         </div>
       )

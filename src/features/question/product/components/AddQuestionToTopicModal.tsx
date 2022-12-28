@@ -66,13 +66,13 @@ export const AddQuestionToTopicModal: React.FC<Props> = ({
     onSubmit: async (values: any) => {
       setLoading(true);
       try {
-        console.log('values: ', values);
         const dataPush = {
           topicID: values.topicID,
           questionID: values.pk_QuestionStandard_Id
         };
         await requestAddQuestionToTopic(dataPush);
         toast.success('Thêm chủ đề thành công!');
+        fetchDataSource();
       } catch (error) {
         console.error('Exception ' + error);
       } finally {

@@ -23,14 +23,8 @@ export const CoursePage: React.FC = () => {
     {
       title: 'Mã KH',
       keyData: 'code',
-      render: (value: string, index: number, record: any) => (
-        <div
-          className="font-semibold cursor-pointer text-primary-color"
-          onClick={() => {
-            goToTopicPage(record.pk_coursId);
-          }}>
-          {value}
-        </div>
+      render: (value: string) => (
+        <div className="font-semibold cursor-pointer text-primary-color">{value}</div>
       )
     },
     {
@@ -41,8 +35,12 @@ export const CoursePage: React.FC = () => {
     {
       title: 'Ảnh',
       keyData: 'coursImage',
-      render: (value: string) => (
-        <div className="w-[80px] h-[80px] flex justify-center items-center ">
+      render: (value: string, index: number, record: any) => (
+        <div
+          className="w-[80px] h-[80px] flex justify-center items-center cursor-pointer"
+          onClick={() => {
+            goToTopicPage(record.pk_coursId);
+          }}>
           <img
             src={value}
             alt="img_product"
