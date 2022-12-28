@@ -9,6 +9,7 @@ import { Button, UploadImageButton } from 'shared/components/Button';
 import { WhiteBoxWrapper } from 'shared/components/common';
 import { FormFieldComponent } from 'shared/components/Form';
 import { TField } from 'shared/components/Form/interface';
+import { getBase64 } from 'shared/utils/helperImage';
 import * as Yup from 'yup';
 import { requestCreateCourse, requestDetailCourse, requestUpdateCourse } from '../api/course.api';
 
@@ -107,7 +108,6 @@ export const UpdateCourse: React.FC = () => {
   const getDetailData = async () => {
     try {
       const res = await requestDetailCourse(id);
-
       setValueFormField(res.data);
     } catch (error) {
       console.error('Exception ' + error);
@@ -130,8 +130,12 @@ export const UpdateCourse: React.FC = () => {
           const handleChangeImage = async (file: any) => {
             try {
               setLoading(true);
-
-              formik.setFieldValue('coursImage', file);
+              if (!file) return;
+              const FR = new FileReader();
+              FR.addEventListener('load', function (evt: any) {
+                formik.setFieldValue('coursImage', evt.target.result);
+              });
+              FR.readAsDataURL(file);
             } catch (error) {
               console.error('Exception ' + error);
             } finally {
@@ -145,7 +149,7 @@ export const UpdateCourse: React.FC = () => {
           return (
             <Form>
               <WhiteBoxWrapper className="relative bottom-0 flex justify-between items-center flex-1">
-                <span className="text-lg font-bold">{pageTitle()} từ vựng</span>
+                <span className="text-lg font-bold">{pageTitle()} khóa học</span>
                 <Button className="w-full p-4 bg-primary-color" htmlType="submit">
                   Lưu
                 </Button>

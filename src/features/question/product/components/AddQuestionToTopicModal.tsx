@@ -67,7 +67,11 @@ export const AddQuestionToTopicModal: React.FC<Props> = ({
       setLoading(true);
       try {
         console.log('values: ', values);
-        await requestAddQuestionToTopic(values);
+        const dataPush = {
+          topicID: values.topicID,
+          questionID: values.pk_QuestionStandard_Id
+        };
+        await requestAddQuestionToTopic(dataPush);
         toast.success('Thêm chủ đề thành công!');
       } catch (error) {
         console.error('Exception ' + error);

@@ -26,3 +26,7 @@ export const requestUpdateTopic = (payload: object): Promise<ResponseApi<any>> =
 export const requestUploadImage = (payload: object): Promise<ResponseApi<any>> => {
   return ApiBaseService.post(`${URL_QUESTION}/UploadImage`, payload);
 };
+
+export const requestDeleteTopic = (id: string | number): Promise<ResponseApi<any>> => {
+  return ApiBaseService.delete(`${URL_QUESTION}/topic/${id}`);
+};

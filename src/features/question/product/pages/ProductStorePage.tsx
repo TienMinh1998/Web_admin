@@ -1,10 +1,12 @@
+import { DatePicker } from 'antd';
 import moment from 'moment';
 import React, { useState } from 'react';
-import { BiPlusCircle } from 'react-icons/bi';
+import { BiFilterAlt, BiPlusCircle } from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';
 import { PROTECTED_ROUTES_PATH } from 'routes/RoutesPath';
 import { Button, ButtonIcon } from 'shared/components/Button';
 import { HeaderPage, WhiteBoxWrapper } from 'shared/components/common';
+import FilterPage from 'shared/components/common/FilterPage';
 import { EditIcon, SwitchIcon } from 'shared/components/Icons';
 import { InputSearch } from 'shared/components/Input';
 import { Table } from 'shared/components/Table/Table';
@@ -14,12 +16,17 @@ import { AddQuestionToTopicModal } from '../components/AddQuestionToTopicModal';
 
 export const ProductStorePage: React.FC = () => {
   const navigate = useNavigate();
-  const [expandFilter, setExpandFilter] = useState<any>({ columnSort: 'created_on', isDesc: true });
-  const [searchText, setSearchText] = useState<string>('');
-  const { dataSource, loading, paging, setPaging, fetchDataSource } = useTableData({
-    expandFilter,
-    fetchList: requestAllQuestion
+  const [expandFilter, setExpandFilter] = useState<any>({
+    columnSort: 'created_on',
+    isDesc: true,
+    date: ''
   });
+  const [searchText, setSearchText] = useState<string>('');
+  const { dataSource, loading, paging, showFilter, setPaging, fetchDataSource, onToogleFilter } =
+    useTableData({
+      expandFilter,
+      fetchList: requestAllQuestion
+    });
   const [dataUpdate, setDataUpdate] = useState({
     topicID: '',
     questionID: ''
@@ -108,6 +115,25 @@ export const ProductStorePage: React.FC = () => {
     setDataUpdate(data);
   };
 
+  const formFilter = {
+    date: {
+      label: 'Ngày tạo',
+      className: 'col-span-6',
+      component: (
+        <DatePicker
+          style={{ width: '95%' }}
+          allowClear
+          format="YYYY-MM-DD"
+          placeholder="Ngày tạo"
+          onChange={(date, dateString) => {
+            console.log('dateString: ', dateString);
+            setExpandFilter({ ...expandFilter, date: dateString || undefined });
+          }}
+        />
+      )
+    }
+  };
+
   return (
     <div className="p-2">
       <HeaderPage
@@ -129,12 +155,18 @@ export const ProductStorePage: React.FC = () => {
                   setSearchText(e.target.value);
                 }}
                 onSearch={() => {
-                  setExpandFilter({ ...expandFilter, name: searchText, page: 1 });
+                  setExpandFilter({ ...expandFilter, searchKey: searchText || undefined, page: 1 });
                 }}
               />
             </div>
+            <Button className="mr-4 flex items-center justify-center" onClick={onToogleFilter}>
+              <BiFilterAlt />
+              Filter
+            </Button>
           </div>
         </>
+
+        {showFilter && <FilterPage filters={formFilter} />}
       </HeaderPage>
 
       <WhiteBoxWrapper>

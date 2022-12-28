@@ -1,32 +1,33 @@
-import { DatePicker } from 'antd';
+import { DatePicker, Popconfirm } from 'antd';
 import R from 'assets';
 import moment from 'moment';
 import React, { useState } from 'react';
 import { BiFilterAlt, BiPlusCircle } from 'react-icons/bi';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { PROTECTED_ROUTES_PATH } from 'routes/RoutesPath';
 import { Button, ButtonIcon } from 'shared/components/Button';
 import { HeaderPage, WhiteBoxWrapper } from 'shared/components/common';
 import FilterPage from 'shared/components/common/FilterPage';
-import { EditIcon } from 'shared/components/Icons';
+import { DeleteIcon, EditIcon } from 'shared/components/Icons';
 import { InputSearch } from 'shared/components/Input';
 import { Table } from 'shared/components/Table/Table';
 import { useTableData } from 'shared/hooks/useTableData';
 import { BaseSelect } from 'shared/styled-components';
 import { ORDER_STATUS } from 'shared/utils/filterData';
-import { requestTopicList } from '../api/topic.api';
+import { requestDeleteTopic, requestTopicList } from '../api/topic.api';
 
 const { RangePicker } = DatePicker;
 
 export const TopicPage: React.FC = () => {
   const navigate = useNavigate();
+  const { courseId } = useParams();
   const [expandFilter, setExpandFilter] = useState<any>({ columnSort: 'created_on', isDesc: true });
   const [searchText, setSearchText] = useState<string>('');
-  const { dataSource, loading, paging, setPaging, showFilter, fetchDataSource, onToogleFilter } =
-    useTableData({
-      expandFilter,
-      fetchList: requestTopicList
-    });
+  const { dataSource, loading, paging, setPaging, fetchDataSource } = useTableData({
+    expandFilter,
+    fetchList: requestTopicList
+  });
   const columns = [
     {
       title: 'Ảnh',
@@ -69,23 +70,33 @@ export const TopicPage: React.FC = () => {
               }}
             />
           </ButtonIcon>
-          {/* <ButtonIcon className="mr-2">
+          <ButtonIcon className="mr-2">
             <Popconfirm
               placement="bottom"
-              title="Bạn chắc chắn muốn xóa khóa học?"
+              title="Bạn chắc chắn muốn xóa chủ đề?"
               onConfirm={() => {
-                handleClickDelete(record.pk_coursId);
+                handleClickDelete(record.pK_Topic_Id);
               }}
               okText="Xóa"
               cancelText="Thoát"
               okButtonProps={{ type: 'primary', danger: true }}>
               <DeleteIcon className="hover:text-red-500  cursor-pointer text-xl" />
             </Popconfirm>
-          </ButtonIcon> */}
+          </ButtonIcon>
         </div>
       )
     }
   ];
+
+  const handleClickDelete = async (id: number) => {
+    try {
+      await requestDeleteTopic(id);
+      toast.success('Xóa chủ đề thành công!');
+      fetchDataSource();
+    } catch (error) {
+      console.error('Exception ' + error);
+    }
+  };
 
   const goToCreate = () => {
     navigate(`${PROTECTED_ROUTES_PATH.TOPIC_QUESTION}/add`);
@@ -139,26 +150,7 @@ export const TopicPage: React.FC = () => {
             </Button>
           </div>
         }>
-        <>
-          <div className="grid grid-cols-12 gap-x-2 gap-y-4 mt-4">
-            <div className="col-span-6">
-              <InputSearch
-                placeholder="Search by Topic Name"
-                onChange={(e) => {
-                  setSearchText(e.target.value);
-                }}
-                onSearch={() => {
-                  setExpandFilter({ ...expandFilter, userId: searchText, page: 1 });
-                }}
-              />
-            </div>
-            <Button className="mr-4 flex items-center justify-center" onClick={onToogleFilter}>
-              <BiFilterAlt />
-              Filter
-            </Button>
-          </div>
-          {showFilter && <FilterPage filters={formFilter} />}
-        </>
+        <></>
       </HeaderPage>
 
       <WhiteBoxWrapper>

@@ -1,5 +1,4 @@
 import { Popconfirm } from 'antd';
-import R from 'assets';
 import moment from 'moment';
 import React, { useState } from 'react';
 import { BiPlusCircle } from 'react-icons/bi';
@@ -16,7 +15,6 @@ import { requestCourseList, requestDeleteCourse } from '../api/course.api';
 export const CoursePage: React.FC = () => {
   const navigate = useNavigate();
   const [expandFilter, setExpandFilter] = useState<any>({ columnSort: 'created_on', isDesc: true });
-  const [searchText, setSearchText] = useState<string>('');
   const { dataSource, loading, paging, setPaging, fetchDataSource } = useTableData({
     expandFilter,
     fetchList: requestCourseList
@@ -29,7 +27,7 @@ export const CoursePage: React.FC = () => {
         <div
           className="font-semibold cursor-pointer text-primary-color"
           onClick={() => {
-            goToDetail(record.pk_coursId);
+            goToTopicPage(record.pk_coursId);
           }}>
           {value}
         </div>
@@ -107,6 +105,10 @@ export const CoursePage: React.FC = () => {
     navigate(`${PROTECTED_ROUTES_PATH.COURSE}/${id}`);
   };
 
+  const goToTopicPage = (id: number) => {
+    navigate(`${PROTECTED_ROUTES_PATH.TOPIC_QUESTION}/?courseId=${id}`);
+  };
+
   const handleClickDelete = async (id: number) => {
     try {
       await requestDeleteCourse(id);
@@ -159,15 +161,6 @@ export const CoursePage: React.FC = () => {
           }}
         />
       </WhiteBoxWrapper>
-
-      {/* {visibleModal && (
-        <AddQuestionToTopicModal
-          visible={visibleModal}
-          onCancel={toogleModal}
-          dataUpdate={dataUpdate}
-          fetchDataSource={fetchDataSource}
-        />
-      )} */}
     </div>
   );
 };
