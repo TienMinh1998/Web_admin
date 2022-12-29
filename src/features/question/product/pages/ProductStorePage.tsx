@@ -135,7 +135,6 @@ export const ProductStorePage: React.FC = () => {
           format="YYYY-MM-DD"
           placeholder="Ngày tạo"
           onChange={(date, dateString) => {
-            console.log('dateString: ', dateString);
             setExpandFilter({ ...expandFilter, date: dateString || undefined });
           }}
         />
