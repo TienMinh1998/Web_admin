@@ -3,7 +3,7 @@ import R from 'assets';
 import moment from 'moment';
 import React, { useState } from 'react';
 import { BiPlusCircle } from 'react-icons/bi';
-import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { PROTECTED_ROUTES_PATH } from 'routes/RoutesPath';
 import { Button, ButtonIcon } from 'shared/components/Button';
@@ -26,7 +26,6 @@ export const TopicPage: React.FC = () => {
     isDesc: true,
     courseId: courseIdParram
   });
-  const [searchText, setSearchText] = useState<string>('');
   const { dataSource, loading, paging, setPaging, fetchDataSource } = useTableData({
     expandFilter,
     fetchList: requestTopicList

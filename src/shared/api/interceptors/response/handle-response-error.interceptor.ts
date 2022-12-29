@@ -32,8 +32,6 @@ export async function handleResponseError(error: ErrorApiResponse) {
   if (data && data.code === API_STATUS.UNAUTHORIZED) {
     try {
       if (!checkRequestRefreshToken(config.url, data.message)) {
-        console.log('RUN2');
-
         const res = await requestAccessToken();
         CliCookieService.set(CLI_COOKIE_KEYS.ACCESS_TOKEN, res.data.accessToken?.replace(/"/g, ''));
         CliCookieService.set(
