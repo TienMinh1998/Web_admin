@@ -1,18 +1,19 @@
-import { DatePicker } from 'antd';
+import { DatePicker, Popconfirm } from 'antd';
 import moment from 'moment';
 import React, { useState } from 'react';
 import { AiOutlineCheckCircle } from 'react-icons/ai';
 import { BiFilterAlt, BiPlusCircle } from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { PROTECTED_ROUTES_PATH } from 'routes/RoutesPath';
 import { Button, ButtonIcon } from 'shared/components/Button';
 import { HeaderPage, WhiteBoxWrapper } from 'shared/components/common';
 import FilterPage from 'shared/components/common/FilterPage';
-import { EditIcon, SwitchIcon } from 'shared/components/Icons';
+import { DeleteIcon, EditIcon, SwitchIcon } from 'shared/components/Icons';
 import { InputSearch } from 'shared/components/Input';
 import { Table } from 'shared/components/Table/Table';
 import { useTableData } from 'shared/hooks/useTableData';
-import { requestAllQuestion } from '../api/question.api';
+import { requestAllQuestion, requestDeleteQuestion } from '../api/question.api';
 import { AddQuestionToTopicModal } from '../components/AddQuestionToTopicModal';
 
 export const ProductStorePage: React.FC = () => {
@@ -102,10 +103,33 @@ export const ProductStorePage: React.FC = () => {
               }}
             />
           </ButtonIcon>
+          <ButtonIcon className="mr-2">
+            <Popconfirm
+              placement="bottom"
+              title="Bạn chắc chắn muốn xóa từ vựng?"
+              onConfirm={() => {
+                handleClickDelete(record.pk_QuestionStandard_Id);
+              }}
+              okText="Xóa"
+              cancelText="Thoát"
+              okButtonProps={{ type: 'primary', danger: true }}>
+              <DeleteIcon className="hover:text-red-500  cursor-pointer text-xl" />
+            </Popconfirm>
+          </ButtonIcon>
         </div>
       )
     }
   ];
+
+  const handleClickDelete = async (id: number) => {
+    try {
+      await requestDeleteQuestion(id);
+      toast.success('Xóa từ vựng thành công!');
+      fetchDataSource();
+    } catch (error) {
+      console.error('Exception ' + error);
+    }
+  };
 
   const goToCreateProduct = () => {
     navigate(`${PROTECTED_ROUTES_PATH.QUESTION}/add`);

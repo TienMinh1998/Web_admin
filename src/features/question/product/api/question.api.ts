@@ -22,6 +22,10 @@ export const requestUpdateQuestion = (payload: object): Promise<ResponseApi<any>
   return ApiBaseService.put(`${URL_QUESTION}/UpdateQuestionStandard`, payload);
 };
 
+export const requestDeleteQuestion = (id: string | number): Promise<ResponseApi<any>> => {
+  return ApiBaseService.delete(`${URL_QUESTION}/QuestionStandard/${id}`);
+};
+
 export const requestAddQuestionToTopic = (payload: object): Promise<ResponseApi<any>> => {
   return ApiBaseService.put(`${URL_QUESTION}/AddQuestionToTopic`, payload);
 };
