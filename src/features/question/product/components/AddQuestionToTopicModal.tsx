@@ -14,6 +14,8 @@ type Props = {
   fetchDataSource: any;
 };
 
+const { Option } = Select;
+
 export const AddQuestionToTopicModal: React.FC<Props> = ({
   visible,
   onCancel,
@@ -38,7 +40,7 @@ export const AddQuestionToTopicModal: React.FC<Props> = ({
       const { data } = await requestAllCourse();
 
       const convertData = data.map((item: any) => ({ label: item.title, value: item.pk_coursId }));
-      setCourses(convertData);
+      setCourses(data);
     } catch (error) {
       console.error('Exception ' + error);
     }
@@ -52,6 +54,7 @@ export const AddQuestionToTopicModal: React.FC<Props> = ({
         label: item.vietNamContent,
         value: item.pK_Topic_Id
       }));
+
       setTopics(convertData);
     } catch (error) {
       console.error('Exception ' + error);
@@ -101,11 +104,23 @@ export const AddQuestionToTopicModal: React.FC<Props> = ({
           <div className="grid col-span-6">
             <Select
               placeholder="Chọn khóa học"
-              options={courses}
+              optionLabelProp="label"
               onChange={(value: number) => {
                 onChangeCouse(value);
-              }}
-            />
+              }}>
+              {courses?.map((cource: any) => (
+                <Option value={cource?.pk_coursId} label={cource?.title} key={cource?.pk_coursId}>
+                  <div className="flex ">
+                    <img
+                      src={cource?.coursImage}
+                      alt="img_product"
+                      className="rounded object-contain w-[50px] h-[50px]"
+                    />
+                    <span>{cource?.title}</span>
+                  </div>
+                </Option>
+              ))}
+            </Select>
           </div>
         </div>
         <div className="col-span-12 mt-2">
@@ -117,8 +132,7 @@ export const AddQuestionToTopicModal: React.FC<Props> = ({
               onChange={(value: string) => {
                 onChangeTopic(value);
               }}
-              disabled={!courseSelected}
-            />
+              disabled={!courseSelected}></Select>
           </div>
         </div>
         <div className="flex justify-end mt-4">
@@ -130,7 +144,7 @@ export const AddQuestionToTopicModal: React.FC<Props> = ({
             Cancel
           </Button>
           <Button className="w-full p-4 bg-primary-color" htmlType="submit">
-            Chọn chủ đề
+            Xác nhận
           </Button>
         </div>
       </form>
