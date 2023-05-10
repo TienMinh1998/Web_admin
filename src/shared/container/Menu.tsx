@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { AiFillHome } from 'react-icons/ai';
 import { BiCategoryAlt } from 'react-icons/bi';
 import { MdOutlineTopic } from 'react-icons/md';
-import { BsFillPatchQuestionFill } from 'react-icons/bs';
+import { BsFillPatchQuestionFill, BsNewspaper } from 'react-icons/bs';
 import { PROTECTED_ROUTES_PATH } from 'routes/RoutesPath';
 import { TGroupMenu } from 'shared/types/interface';
 import { GroupMenu } from './GroupMenu';
@@ -15,7 +15,7 @@ const MENU: Array<TGroupMenu> = [
   },
   {
     titleGroup: 'Question',
-    keyGroup: '5',
+    keyGroup: '2',
     groupMenu: [
       {
         title: 'Course',
@@ -31,6 +31,16 @@ const MENU: Array<TGroupMenu> = [
         title: 'Questions',
         to: PROTECTED_ROUTES_PATH.QUESTION,
         icon: <BsFillPatchQuestionFill />
+      }
+    ]
+  },
+  {
+    keyGroup: '3',
+    groupMenu: [
+      {
+        title: 'Post',
+        to: PROTECTED_ROUTES_PATH.POST,
+        icon: <BsNewspaper />
       }
     ]
   }

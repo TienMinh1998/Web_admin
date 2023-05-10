@@ -3,7 +3,8 @@ export const PROTECTED_ROUTES_PATH = {
   TOPIC_QUESTION: '/topic-question',
   COURSE: '/course',
   QUESTION: '/question',
-  NOTIFICATION: '/notification'
+  NOTIFICATION: '/notification',
+  POST: '/post'
 };
 
 export const PUBLIC_ROUTES_PATH = {

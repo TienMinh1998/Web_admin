@@ -7,6 +7,7 @@ import { NotificationPage } from 'features/notification';
 import { ProductStorePage, TopicPage, UpdateTopic } from 'features/question';
 import { UpdateProduct } from 'features/question/product/pages/UpdateProduct';
 import { CoursePage, UpdateCourse } from 'features/course';
+import { PostPage } from 'features/news';
 
 export const ProtectedRoutes: RouteObject[] = [
   {
@@ -66,6 +67,10 @@ export const ProtectedRoutes: RouteObject[] = [
         element: <UpdateTopic />
       }
     ]
+  },
+  {
+    path: PROTECTED_ROUTES_PATH.POST,
+    element: <PostPage />
   },
   {
     path: PROTECTED_ROUTES_PATH.NOTIFICATION,
