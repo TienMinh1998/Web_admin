@@ -81,7 +81,7 @@ export const ProtectedRoutes: RouteObject[] = [
         element: <UpdatePost />
       },
       {
-        path: ':id',
+        path: ':mode/:id',
         element: <UpdatePost />
       }
     ]

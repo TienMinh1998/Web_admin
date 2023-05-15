@@ -1,28 +1,35 @@
 import { Form, Formik, FormikProps } from 'formik';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { PROTECTED_ROUTES_PATH } from 'routes/RoutesPath';
-import { Button, UploadImageButton } from 'shared/components/Button';
+import { UploadImageButton } from 'shared/components/Button';
 import { FormFieldComponent } from 'shared/components/Form';
 import { TField } from 'shared/components/Form/interface';
 import { WhiteBoxWrapper } from 'shared/components/common';
 import * as Yup from 'yup';
 import { requestCreatePost, requestDetailPost, requestUpdatePost } from '../api/post.api';
+import moment from 'moment';
+import { Button } from 'antd';
 
 const validateSchema = {
   title: Yup.string().required('Hãy nhập tiêu đề'),
   definetion: Yup.string().required('Hãy nhập định nghĩa')
 };
 export const UpdatePost: React.FC = () => {
-  const { id } = useParams();
+  const { id, mode } = useParams();
   const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(false);
   const [valueFormField, setValueFormField] = useState({
     title: '',
     content: '',
-    target: ''
+    definetion: '',
+    translate: '',
+    createdDate: ''
   });
+  const allowEdit = useMemo(() => {
+    return ['edit', 'add'].includes(mode?.toString() || 'add');
+  }, [mode]);
 
   const [formField, setFormField] = useState<Record<string, TField>>({
     title: {
@@ -64,7 +71,6 @@ export const UpdatePost: React.FC = () => {
   const onHandleSubmit = async (values: any) => {
     try {
       const dataPush = { ...values };
-      console.log('dataPush: ', dataPush);
       const formData = new FormData();
       Object.keys(dataPush).map((key: any) => {
         if (!dataPush[key]) return;
@@ -76,7 +82,7 @@ export const UpdatePost: React.FC = () => {
       });
 
       if (id) {
-        await requestUpdatePost(formData);
+        await requestUpdatePost(dataPush);
         toast.success('Cập nhật bài viết thành công!');
         navigate(PROTECTED_ROUTES_PATH.POST);
       } else {
@@ -103,8 +109,12 @@ export const UpdatePost: React.FC = () => {
     return 'Thêm';
   };
 
+  const goToEdit = () => {
+    navigate(`${PROTECTED_ROUTES_PATH.POST}/edit/${id}`);
+  };
+
   return (
-    <div className=" p-2">
+    <div className="p-2">
       <Formik
         enableReinitialize
         initialValues={{ ...valueFormField }}
@@ -135,38 +145,59 @@ export const UpdatePost: React.FC = () => {
             <Form>
               <WhiteBoxWrapper className="relative bottom-0 flex justify-between items-center flex-1">
                 <span className="text-lg font-bold">{pageTitle()} bài viết</span>
-                <Button className="w-full p-4 bg-primary-color" htmlType="submit">
-                  Lưu
-                </Button>
+                <div>
+                  {allowEdit && (
+                    <Button type="primary" htmlType="submit">
+                      Lưu
+                    </Button>
+                  )}
+                  {!allowEdit && (
+                    <Button type="primary" onClick={goToEdit}>
+                      Sửa
+                    </Button>
+                  )}
+                </div>
               </WhiteBoxWrapper>
+              {allowEdit ? (
+                <div className="grid grid-rows-1 grid-cols-4 gap-4 mt-2 ">
+                  <div className="col-span-3">
+                    <WhiteBoxWrapper>
+                      <div className="text-lg font-bold">Thông tin bài viết</div>
+                      <FormFieldComponent formField={formField} formik={formik} />
+                    </WhiteBoxWrapper>
+                  </div>
 
-              <div className="grid grid-rows-1 grid-cols-4 gap-4 mt-2 ">
-                <div className="col-span-3">
-                  <WhiteBoxWrapper>
-                    <div className="text-lg font-bold">Thông tin bài viết</div>
-                    <FormFieldComponent formField={formField} formik={formik} />
-                  </WhiteBoxWrapper>
+                  <div className="col-span-1">
+                    <WhiteBoxWrapper>
+                      <div className="font-bold">Ảnh bài viết</div>
+
+                      <div className="flex justify-center my-4">
+                        <UploadImageButton
+                          loading={loading}
+                          src={formik.values.image}
+                          onChangeImage={handleChangeImage}
+                          onClear={onCloseImage}
+                        />
+                      </div>
+                      <div className="text-center text-gray-500 font-semibold">
+                        <div>Chọn ảnh cho bài viết</div>
+                        <div>Chỉ ảnh *.png, *jpg and *jpeg được chấp nhận</div>
+                      </div>
+                    </WhiteBoxWrapper>
+                  </div>
                 </div>
+              ) : (
+                <div className="bg-white py-10 px-6">
+                  <div className="text-center font-semibold text-2xl">{valueFormField?.title}</div>
+                  <div className="w-full text-end text-zinc-400 font-semibold mb-3">
+                    {moment(valueFormField?.createdDate).format('HH:mm DD/MM/YYYY')}
+                  </div>
 
-                <div className="col-span-1">
-                  <WhiteBoxWrapper>
-                    <div className="font-bold">Ảnh bài viết</div>
-
-                    <div className="flex justify-center my-4">
-                      <UploadImageButton
-                        loading={loading}
-                        src={formik.values.image}
-                        onChangeImage={handleChangeImage}
-                        onClear={onCloseImage}
-                      />
-                    </div>
-                    <div className="text-center text-gray-500 font-semibold">
-                      <div>Chọn ảnh cho bài viết</div>
-                      <div>Chỉ ảnh *.png, *jpg and *jpeg được chấp nhận</div>
-                    </div>
-                  </WhiteBoxWrapper>
+                  <div className="mb-2">{valueFormField?.definetion}</div>
+                  <div className="mb-2">{valueFormField?.content}</div>
+                  <div className="mb-2">{valueFormField?.translate}</div>
                 </div>
-              </div>
+              )}
             </Form>
           );
         }}

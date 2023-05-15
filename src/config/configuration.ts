@@ -15,4 +15,4 @@ export const configuration: ConfigurationValidator = {
   API_TIMEOUT_REQUEST: 20000
 };
 
-export const urlApiServices = 'http://194.163.190.91:8044';
+export const urlApiServices = 'https://viettienhung.com';
