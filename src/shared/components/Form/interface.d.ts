@@ -8,6 +8,7 @@ export type TField = {
   rule?: any;
   handleValue?: () => void;
   disabled?: boolean;
+  minRows?: number;
 };
 
 export type TFormField = {

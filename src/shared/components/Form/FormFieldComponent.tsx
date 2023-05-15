@@ -87,6 +87,7 @@ export const FormFieldComponent: React.FC<TFormField> = ({ formField, formik }) 
                 key={field.nameField}
                 name={field.nameField}
                 id={field.nameField}
+                minRows={field.minRows}
                 placeholder={field.placeholder}
                 style={{ width: '100%' }}
                 className="w-full"

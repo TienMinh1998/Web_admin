@@ -14,7 +14,8 @@ export const PostPage: React.FC = () => {
   const [expandFilter, setExpandFilter] = useState<any>({ columnSort: 'created_on', isDesc: true });
   const { dataSource, loading, paging, setPaging, fetchDataSource } = useTableData({
     expandFilter,
-    fetchList: requestPosts
+    fetchList: requestPosts,
+    pageSize: 1000
   });
 
   const goToCreateProduct = () => {

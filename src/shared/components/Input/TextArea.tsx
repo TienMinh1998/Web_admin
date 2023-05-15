@@ -8,7 +8,7 @@ export const TextArea: React.FC<TextAreaProps> = ({
   placeholder,
   disabled = false,
   className = '',
-  minRows = 2,
+  minRows = 4,
   maxRows = 6,
   showCount = false,
   maxLength,

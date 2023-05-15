@@ -3,15 +3,16 @@ import { useEffect, useState } from 'react';
 interface IUseTableData {
   expandFilter: object;
   fetchList?: any;
+  pageSize?: number;
 }
-export const useTableData = ({ expandFilter = {}, fetchList }: IUseTableData) => {
+export const useTableData = ({ expandFilter = {}, fetchList, pageSize = 10 }: IUseTableData) => {
   const [dataSource, setdataSource] = useState<Array<any>>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [showFilter, setShowFilter] = useState<boolean>(false);
   const [paging, setPaging] = useState({
     currentPage: 1,
     total: 0,
-    pageSize: 10
+    pageSize: pageSize
   });
 
   useEffect(() => {

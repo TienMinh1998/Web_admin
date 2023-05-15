@@ -1,4 +1,6 @@
+import { Button } from 'antd';
 import { Form, Formik, FormikProps } from 'formik';
+import moment from 'moment';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -6,11 +8,10 @@ import { PROTECTED_ROUTES_PATH } from 'routes/RoutesPath';
 import { UploadImageButton } from 'shared/components/Button';
 import { FormFieldComponent } from 'shared/components/Form';
 import { TField } from 'shared/components/Form/interface';
+import { Loadingv2 } from 'shared/components/Loading';
 import { WhiteBoxWrapper } from 'shared/components/common';
 import * as Yup from 'yup';
 import { requestCreatePost, requestDetailPost, requestUpdatePost } from '../api/post.api';
-import moment from 'moment';
-import { Button } from 'antd';
 
 const validateSchema = {
   title: Yup.string().required('Hãy nhập tiêu đề'),
@@ -27,6 +28,8 @@ export const UpdatePost: React.FC = () => {
     translate: '',
     createdDate: ''
   });
+  const [loadingPage, setLoadingPage] = useState<boolean>(false);
+
   const allowEdit = useMemo(() => {
     return ['edit', 'add'].includes(mode?.toString() || 'add');
   }, [mode]);
@@ -42,7 +45,7 @@ export const UpdatePost: React.FC = () => {
     definetion: {
       nameField: 'definetion',
       className: 'col-span-6',
-      label: '<span style="color:red">*</span> Định nghĩa',
+      label: '<span style="color:red">*</span> Dịch tiêu đề',
       component: 'Input',
       placeholder: 'Nhập định nghĩa'
     },
@@ -51,14 +54,16 @@ export const UpdatePost: React.FC = () => {
       className: 'col-span-12',
       label: 'Nội dung',
       component: 'TextArea',
-      placeholder: 'Nhập nội dung bài viết'
+      placeholder: 'Nhập nội dung bài viết',
+      minRows: 14
     },
     translate: {
       nameField: 'translate',
       className: 'col-span-12',
       label: 'Bản dịch',
       component: 'TextArea',
-      placeholder: 'Nhập nội dung bản dịch'
+      placeholder: 'Nhập nội dung bản dịch',
+      minRows: 14
     }
   });
 
@@ -97,10 +102,13 @@ export const UpdatePost: React.FC = () => {
 
   const getDetailData = async () => {
     try {
+      setLoadingPage(true);
       const res = await requestDetailPost(id);
       setValueFormField(res.data);
     } catch (error) {
       console.error('Exception ' + error);
+    } finally {
+      setLoadingPage(false);
     }
   };
 
@@ -115,93 +123,98 @@ export const UpdatePost: React.FC = () => {
 
   return (
     <div className="p-2">
-      <Formik
-        enableReinitialize
-        initialValues={{ ...valueFormField }}
-        validationSchema={Yup.object(validateSchema)}
-        onSubmit={onHandleSubmit}>
-        {(formik: FormikProps<any>) => {
-          const handleChangeImage = async (file: any) => {
-            try {
-              setLoading(true);
-              if (!file) return;
-              formik.setFieldValue('imageFile', file);
-              const FR = new FileReader();
-              FR.addEventListener('load', function (evt: any) {
-                formik.setFieldValue('image', evt.target.result);
-              });
-              FR.readAsDataURL(file);
-            } catch (error) {
-              console.error('Exception ' + error);
-            } finally {
-              setLoading(false);
-            }
-          };
+      <Loadingv2 loading={loadingPage}>
+        <Formik
+          enableReinitialize
+          initialValues={{ ...valueFormField }}
+          validationSchema={Yup.object(validateSchema)}
+          onSubmit={onHandleSubmit}>
+          {(formik: FormikProps<any>) => {
+            const handleChangeImage = async (file: any) => {
+              try {
+                setLoading(true);
+                if (!file) return;
+                formik.setFieldValue('imageFile', file);
+                const FR = new FileReader();
+                FR.addEventListener('load', function (evt: any) {
+                  formik.setFieldValue('image', evt.target.result);
+                });
+                FR.readAsDataURL(file);
+              } catch (error) {
+                console.error('Exception ' + error);
+              } finally {
+                setLoading(false);
+              }
+            };
 
-          const onCloseImage = () => {
-            formik.setFieldValue('image', '');
-          };
-          return (
-            <Form>
-              <WhiteBoxWrapper className="relative bottom-0 flex justify-between items-center flex-1">
-                <span className="text-lg font-bold">{pageTitle()} bài viết</span>
-                <div>
-                  {allowEdit && (
-                    <Button type="primary" htmlType="submit">
-                      Lưu
-                    </Button>
-                  )}
-                  {!allowEdit && (
-                    <Button type="primary" onClick={goToEdit}>
-                      Sửa
-                    </Button>
-                  )}
-                </div>
-              </WhiteBoxWrapper>
-              {allowEdit ? (
-                <div className="grid grid-rows-1 grid-cols-4 gap-4 mt-2 ">
-                  <div className="col-span-3">
-                    <WhiteBoxWrapper>
-                      <div className="text-lg font-bold">Thông tin bài viết</div>
-                      <FormFieldComponent formField={formField} formik={formik} />
-                    </WhiteBoxWrapper>
+            const onCloseImage = () => {
+              formik.setFieldValue('image', '');
+            };
+            return (
+              <Form>
+                <WhiteBoxWrapper className="relative bottom-0 flex justify-between items-center flex-1">
+                  <span className="text-lg font-bold">{pageTitle()} bài viết</span>
+                  <div>
+                    {allowEdit && (
+                      <Button type="primary" htmlType="submit">
+                        Lưu
+                      </Button>
+                    )}
+                    {!allowEdit && (
+                      <Button type="primary" onClick={goToEdit}>
+                        Sửa
+                      </Button>
+                    )}
                   </div>
+                </WhiteBoxWrapper>
+                {allowEdit ? (
+                  <div className="grid grid-rows-1 grid-cols-4 gap-4 mt-2 ">
+                    <div className="col-span-3">
+                      <WhiteBoxWrapper>
+                        <div className="text-lg font-bold">Thông tin bài viết</div>
+                        <FormFieldComponent formField={formField} formik={formik} />
+                      </WhiteBoxWrapper>
+                    </div>
 
-                  <div className="col-span-1">
-                    <WhiteBoxWrapper>
-                      <div className="font-bold">Ảnh bài viết</div>
+                    <div className="col-span-1">
+                      <WhiteBoxWrapper>
+                        <div className="font-bold">Ảnh bài viết</div>
 
-                      <div className="flex justify-center my-4">
-                        <UploadImageButton
-                          loading={loading}
-                          src={formik.values.image}
-                          onChangeImage={handleChangeImage}
-                          onClear={onCloseImage}
-                        />
-                      </div>
-                      <div className="text-center text-gray-500 font-semibold">
-                        <div>Chọn ảnh cho bài viết</div>
-                        <div>Chỉ ảnh *.png, *jpg and *jpeg được chấp nhận</div>
-                      </div>
-                    </WhiteBoxWrapper>
+                        <div className="flex justify-center my-4">
+                          <UploadImageButton
+                            loading={loading}
+                            src={formik.values.image}
+                            onChangeImage={handleChangeImage}
+                            onClear={onCloseImage}
+                          />
+                        </div>
+                        <div className="text-center text-gray-500 font-semibold">
+                          <div>Chọn ảnh cho bài viết</div>
+                          <div>Chỉ ảnh *.png, *jpg and *jpeg được chấp nhận</div>
+                        </div>
+                      </WhiteBoxWrapper>
+                    </div>
                   </div>
-                </div>
-              ) : (
-                <div className="bg-white py-10 px-6">
-                  <div className="text-center font-semibold text-2xl">{valueFormField?.title}</div>
-                  <div className="w-full text-end text-zinc-400 font-semibold mb-3">
-                    {moment(valueFormField?.createdDate).format('HH:mm DD/MM/YYYY')}
+                ) : (
+                  <div className="bg-white py-10 px-6 text-lg">
+                    <div className="text-center font-semibold text-3xl">
+                      {valueFormField?.title}
+                    </div>
+                    <div className="text-center">({valueFormField?.definetion})</div>
+                    <div className="w-full text-end text-zinc-400 font-semibold mb-3">
+                      {moment(valueFormField?.createdDate).format('HH:mm DD/MM/YYYY')}
+                    </div>
+                    <div className="font-semibold underline">Nội dung:</div>
+                    <div className="mb-2">{valueFormField?.content}</div>
+                    <div className="font-semibold underline">Bản dịch:</div>
+                    <div className="mb-2">{valueFormField?.translate}</div>
                   </div>
-
-                  <div className="mb-2">{valueFormField?.definetion}</div>
-                  <div className="mb-2">{valueFormField?.content}</div>
-                  <div className="mb-2">{valueFormField?.translate}</div>
-                </div>
-              )}
-            </Form>
-          );
-        }}
-      </Formik>
+                )}
+              </Form>
+            );
+          }}
+        </Formik>
+      </Loadingv2>
     </div>
   );
 };
