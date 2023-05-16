@@ -25,7 +25,7 @@ export const PostPage: React.FC = () => {
   return (
     <div className="p-2">
       <HeaderPage
-        title="Tin tức"
+        title="Danh sách các bài viết"
         extraButton={
           <div className="flex">
             <Button className="mr-4 flex items-center justify-center" onClick={goToCreateProduct}>

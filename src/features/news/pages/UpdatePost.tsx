@@ -189,7 +189,7 @@ export const UpdatePost: React.FC = () => {
                           />
                         </div>
                         <div className="text-center text-gray-500 font-semibold">
-                          <div>Chọn ảnh cho bài viết</div>
+                          <div>Chọn ảnh</div>
                           <div>Chỉ ảnh *.png, *jpg and *jpeg được chấp nhận</div>
                         </div>
                       </WhiteBoxWrapper>
@@ -204,9 +204,9 @@ export const UpdatePost: React.FC = () => {
                     <div className="w-full text-end text-zinc-400 font-semibold mb-3">
                       {moment(valueFormField?.createdDate).format('HH:mm DD/MM/YYYY')}
                     </div>
-                    <div className="font-semibold underline">Nội dung:</div>
+                    <div className="font-semibold underline">English:</div>
                     <div className="mb-2">{valueFormField?.content}</div>
-                    <div className="font-semibold underline">Bản dịch:</div>
+                    <div className="font-semibold underline">Vietnamese:</div>
                     <div className="mb-2">{valueFormField?.translate}</div>
                   </div>
                 )}
