@@ -27,35 +27,36 @@ export const PostComp: React.FC<Props> = ({ data, openModalUpdate, fetchDataSour
   return (
     <div className="col-span-3 bg-white shadow-xl flex flex-col justify-between rounded-md text-base">
       <div className="w-full aspect-square p-1">
-        <img src={data?.image} className="w-full h-full aspect-square object-contain rounded" />
+        <img src={data?.image} className="w-full h-full aspect-square object-contain rounded image-item" />
       </div>
-      <div className="py-1 px-2 h-full">
-        <span className=" block-ellipsis" title={data?.definetion}>
-          {data?.definetion}
-        </span>
-      </div>
-      <div className="py-1 px-2 h-full">
+
+      <div className="py-1 px-2 h-full title-item" >
         <span className="font-bold block-ellipsis" title={data?.title}>
           {data?.title}
         </span>
       </div>
 
+      <div className="py-1 px-2 h-full sub-title">
+        <span className=" block-ellipsis" title={data?.definetion}>
+          {data?.definetion}
+        </span>
+      </div>
       <div className="flex justify-center border-t p-3 w-full">
         <Button
-          className="mr-2 w-full"
+          className="default_button"
           onClick={() => {
             goToDetail(data?.id);
           }}>
           Xem
         </Button>
 
-        <Button className="mr-2 w-full" danger>
+        <Button className="delete-button" >
           <Popconfirm
             placement="bottom"
-            title="Do you want delete this post?"
+            title="Bạn có muốn xóa bài biết này?"
             onConfirm={handleClickDelete}
-            okText="Delete"
-            cancelText="Quit"
+            cancelText="Quay lại"
+            okText="Xác nhận"
             okButtonProps={{ type: 'primary', danger: true }}>
             Xóa
           </Popconfirm>

@@ -30,7 +30,7 @@ export const PostPage: React.FC = () => {
           <div className="flex">
             <Button className="mr-4 flex items-center justify-center" onClick={goToCreateProduct}>
               <BiPlusCircle className="mr-1" />
-              Thêm tin tức
+              Thêm bài viết
             </Button>
           </div>
         }>

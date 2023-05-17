@@ -9,3 +9,36 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+
+.default_button {
+  background-color: #1DA1F2;
+  border-radius: 3px;
+  width: 50%;
+  color: aliceblue;
+  font-size: 18;
+  font-weight: 400;
+}
+
+
+.delete-button {
+  background-color: #AAB8C2;
+  border-radius: 3px;
+  width: 50%;
+  color: aliceblue;
+  font-size: 18;
+  font-weight: 400;
+}
+
+.title-item {
+  font-size: 20px;
+  margin-bottom: -20px;
+}
+
+.sub-title {
+  opacity: 0.8;
+}
+
+.image-item {
+  border-radius: 30px;
+}
