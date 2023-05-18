@@ -42,14 +42,14 @@ export const Login = () => {
                 <img alt="logo" src={R.images.logo_ver1} width={150} />
               </div>
               <div className="text-center py-4 font-semibold text-xl italic text-primary-color">
-                Welcome to English Admin
+                Xin chào đến với trang quản trị
               </div>
               <form onSubmit={formik.handleSubmit}>
                 <div>
                   <div className="mt-2">
-                    <div className="mb-1 text-medium-grey font-medium">Username</div>
+                    <div className="mb-1 text-medium-grey font-medium">Tài khoản</div>
                     <Input
-                      placeholder="Enter email address"
+                      placeholder="Nhập tên đăng nhập"
                       id="userName"
                       name="userName"
                       onChange={formik.handleChange}
@@ -62,9 +62,9 @@ export const Login = () => {
                     </div>
                   </div>
                   <div className="mt-2 ">
-                    <div className="mb-1 text-medium-grey font-medium">Password</div>
+                    <div className="mb-1 text-medium-grey font-medium">Mật khẩu</div>
                     <InputPassword
-                      placeholder="Enter password"
+                      placeholder="Nhập mật khẩu"
                       id="password"
                       name="password"
                       onChange={formik.handleChange}
