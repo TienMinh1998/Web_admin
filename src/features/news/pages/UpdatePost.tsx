@@ -208,6 +208,25 @@ export const UpdatePost: React.FC = () => {
                     <div className="mb-2">{valueFormField?.content}</div>
                     <div className="font-semibold underline">Vietnamese:</div>
                     <div className="mb-2">{valueFormField?.translate}</div>
+
+                    <div>
+                      <table className="table">
+                        <tr>
+                          <th>Cụm từ</th>
+                          <th>Ý nghĩa</th>
+                        </tr>
+
+                        <tr>
+                          <td className="bold">company</td>
+                          <td>cùng nhau</td>
+                        </tr>
+
+                        <tr>
+                          <td className="bold">Climbing above</td>
+                          <td>Không ngừng leo thang</td>
+                        </tr>
+                      </table>
+                    </div>
                   </div>
                 )}
               </Form>

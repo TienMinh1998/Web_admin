@@ -11,7 +11,7 @@ import './Menu.css';
 const MENU: Array<TGroupMenu> = [
   {
     keyGroup: '1',
-    groupMenu: [{ title: 'Dashboard', to: PROTECTED_ROUTES_PATH.HOME, icon: <AiFillHome /> }]
+    groupMenu: [{ title: 'Trang chủ', to: PROTECTED_ROUTES_PATH.HOME, icon: <AiFillHome /> }]
   },
   {
     titleGroup: 'Question',
