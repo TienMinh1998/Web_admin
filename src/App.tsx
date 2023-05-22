@@ -1,5 +1,5 @@
 import './App.css';
-import 'antd/dist/antd.min.css';
+import 'antd/dist/reset.css';
 import 'react-loading-skeleton/dist/skeleton.css';
 import { AppRoutes } from 'routes';
 import React from 'react';

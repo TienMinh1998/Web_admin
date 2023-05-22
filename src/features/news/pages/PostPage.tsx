@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BiPlusCircle } from 'react-icons/bi';
+import { BiFilterAlt, BiPlusCircle } from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';
 import { PROTECTED_ROUTES_PATH } from 'routes/RoutesPath';
 import { Button } from 'shared/components/Button';
@@ -8,16 +8,48 @@ import { HeaderPage } from 'shared/components/common';
 import { useTableData } from 'shared/hooks/useTableData';
 import { requestPosts } from '../api/post.api';
 import { PostComp } from './PostComp';
+import { InputSearch } from 'shared/components/Input';
+import FilterPage from 'shared/components/common/FilterPage';
+import { DatePicker } from 'antd';
+import moment from 'moment';
 
+const { RangePicker } = DatePicker;
 export const PostPage: React.FC = () => {
   const navigate = useNavigate();
-  const [expandFilter, setExpandFilter] = useState<any>({ columnSort: 'created_on', isDesc: true });
-  const { dataSource, loading, paging, setPaging, fetchDataSource } = useTableData({
-    expandFilter,
-    fetchList: requestPosts,
-    pageSize: 1000
+  const [searchText, setSearchText] = useState<string>('');
+  const [expandFilter, setExpandFilter] = useState<any>({
+    search: { title: undefined, startDate: undefined, endDate: undefined }
   });
-
+  const { dataSource, loading, showFilter, paging, setPaging, fetchDataSource, onToogleFilter } =
+    useTableData({
+      expandFilter,
+      fetchList: requestPosts,
+      pageSize: 1000
+    });
+  const formFilter = {
+    date: {
+      label: 'From Date / To Date',
+      className: 'col-span-6',
+      component: (
+        <RangePicker
+          style={{ width: '95%' }}
+          allowClear
+          format="DD/MM/YYYY"
+          placeholder={['From Date', 'To Date']}
+          onChange={(date: any, dateString) => {
+            setExpandFilter({
+              ...expandFilter,
+              page: 1,
+              search: {
+                startDate: date ? moment(date[0]).toDate() : undefined,
+                endDate: date ? moment(date[1]).toDate() : undefined
+              }
+            });
+          }}
+        />
+      )
+    }
+  };
   const goToCreateProduct = () => {
     navigate(`${PROTECTED_ROUTES_PATH.POST}/add`);
   };
@@ -34,28 +66,37 @@ export const PostPage: React.FC = () => {
             </Button>
           </div>
         }>
-        {/* <>
+        <>
           <div className="grid grid-cols-12 gap-x-2 gap-y-4 mt-4">
             <div className="col-span-6">
               <InputSearch
-                placeholder="Tìm kiếm khóa học"
+                placeholder="Tìm kiếm bài viết"
                 onChange={(e) => {
                   setSearchText(e.target.value);
                 }}
                 onSearch={() => {
-                  setExpandFilter({ ...expandFilter, name: searchText, page: 1 });
+                  setExpandFilter({ ...expandFilter, title: searchText, page: 1 });
                 }}
               />
             </div>
+            <Button className="mr-4 flex items-center justify-center" onClick={onToogleFilter}>
+              <BiFilterAlt />
+              Filter
+            </Button>
           </div>
-        </> */}
+          {showFilter && <FilterPage filters={formFilter} />}
+        </>
       </HeaderPage>
 
       <Loadingv1 loading={loading}>
         <div className="grid grid-cols-12 gap-x-2 gap-y-4 mt-4">
-          {dataSource?.map((item: any) => (
-            <PostComp key={item._id} data={item} fetchDataSource={fetchDataSource} />
-          ))}
+          {dataSource.length > 0 ? (
+            dataSource?.map((item: any) => (
+              <PostComp key={item._id} data={item} fetchDataSource={fetchDataSource} />
+            ))
+          ) : (
+            <>No data</>
+          )}
         </div>
       </Loadingv1>
     </div>

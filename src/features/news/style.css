@@ -10,19 +10,20 @@
   text-overflow: ellipsis;
 }
 
-
 .default_button {
-  background-color: #1DA1F2;
+  background-color: #1da1f2;
   border-radius: 3px;
   width: 50%;
   color: aliceblue;
   font-size: 18;
   font-weight: 400;
 }
-
+.default_button {
+  color: aliceblue !important;
+}
 
 .delete-button {
-  background-color: #AAB8C2;
+  background-color: #aab8c2;
   border-radius: 3px;
   width: 50%;
   color: aliceblue;
@@ -37,32 +38,4 @@
 
 .sub-title {
   opacity: 0.8;
-}
-
-.image-item {
-  border-radius: 30px;
-}
-
-.table {
-  border-collapse: collapse;
-  width: 100%;
-}
-
-th,
-td {
-  text-align: left;
-  padding: 8px;
-}
-
-th {
-  background-color: #f2f2f2;
-}
-
-tr:nth-child(even) {
-  background-color: #f9f9f9;
-}
-
-.bold {
-  font-weight: bold;
-  color: orange;
 }

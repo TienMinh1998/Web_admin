@@ -1,16 +1,21 @@
-import { Button } from 'antd';
+import { Button, Popconfirm } from 'antd';
 import { Form, Formik, FormikProps } from 'formik';
 import moment from 'moment';
 import React, { useEffect, useMemo, useState } from 'react';
+import { AiOutlineCheckCircle } from 'react-icons/ai';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { PROTECTED_ROUTES_PATH } from 'routes/RoutesPath';
-import { UploadImageButton } from 'shared/components/Button';
+import { ButtonIcon, UploadImageButton } from 'shared/components/Button';
 import { FormFieldComponent } from 'shared/components/Form';
 import { TField } from 'shared/components/Form/interface';
+import { DeleteIcon, EditIcon } from 'shared/components/Icons';
 import { Loadingv2 } from 'shared/components/Loading';
+import { Table } from 'shared/components/Table/Table';
 import { WhiteBoxWrapper } from 'shared/components/common';
+import { useTableData } from 'shared/hooks/useTableData';
 import * as Yup from 'yup';
+import { requestDeletePhrase, requestPhrases } from '../api/phase.api';
 import { requestCreatePost, requestDetailPost, requestUpdatePost } from '../api/post.api';
 
 const validateSchema = {
@@ -20,6 +25,16 @@ const validateSchema = {
 export const UpdatePost: React.FC = () => {
   const { id, mode } = useParams();
   const navigate = useNavigate();
+  const [expandFilter, setExpandFilter] = useState<any>({
+    columnSort: 'created_on',
+    isDesc: true,
+    date: ''
+  });
+  const { dataSource, paging, showFilter, setPaging, fetchDataSource, onToogleFilter } =
+    useTableData({
+      expandFilter,
+      fetchList: requestPhrases
+    });
   const [loading, setLoading] = useState<boolean>(false);
   const [valueFormField, setValueFormField] = useState({
     title: '',
@@ -29,6 +44,7 @@ export const UpdatePost: React.FC = () => {
     createdDate: ''
   });
   const [loadingPage, setLoadingPage] = useState<boolean>(false);
+  const [showTranslate, setShowTranslate] = useState<boolean>(false);
 
   const allowEdit = useMemo(() => {
     return ['edit', 'add'].includes(mode?.toString() || 'add');
@@ -67,11 +83,75 @@ export const UpdatePost: React.FC = () => {
     }
   });
 
+  const columns = [
+    {
+      title: 'Cụm từ',
+      keyData: 'english',
+      render: (value: string, index: number, record: any) => (
+        <div className="font-semibold cursor-pointer text-primary-color flex items-center">
+          {record.added ? (
+            <div className="mr-1">
+              <AiOutlineCheckCircle className="font-semibold text-green-500  text-xl" />
+            </div>
+          ) : (
+            <></>
+          )}
+          {value}
+        </div>
+      )
+    },
+    {
+      title: 'Ý nghĩa',
+      keyData: 'phonetic',
+      render: (value: string) => <div className="font-semibold">{value}</div>
+    },
+    {
+      title: 'Action',
+      keyData: 'id',
+      render: (value: any, index: number, record: any) => (
+        <div className="flex">
+          <ButtonIcon className="mr-2">
+            <EditIcon
+              className="text-xl cursor-pointer hover:text-green-500 "
+              onClick={() => {
+                console.log('hihih');
+              }}
+            />
+          </ButtonIcon>
+
+          <ButtonIcon className="mr-2">
+            <Popconfirm
+              placement="bottom"
+              title="Bạn chắc chắn muốn xóa từ vựng?"
+              onConfirm={() => {
+                handleClickDeletePhase(record.pk_QuestionStandard_Id);
+              }}
+              okText="Xóa"
+              cancelText="Thoát"
+              okButtonProps={{ type: 'primary', danger: true }}>
+              <DeleteIcon className="hover:text-red-500  cursor-pointer text-xl" />
+            </Popconfirm>
+          </ButtonIcon>
+        </div>
+      )
+    }
+  ];
+
   useEffect(() => {
     if (id) {
       getDetailData();
     }
   }, []);
+
+  const handleClickDeletePhase = async (id: number) => {
+    try {
+      await requestDeletePhrase(id);
+      toast.success('Xóa từ vựng thành công!');
+      fetchDataSource();
+    } catch (error) {
+      console.error('Exception ' + error);
+    }
+  };
 
   const onHandleSubmit = async (values: any) => {
     try {
@@ -206,26 +286,35 @@ export const UpdatePost: React.FC = () => {
                     </div>
                     <div className="font-semibold underline">English:</div>
                     <div className="mb-2">{valueFormField?.content}</div>
-                    <div className="font-semibold underline">Vietnamese:</div>
-                    <div className="mb-2">{valueFormField?.translate}</div>
+                    <div className="flex justify-center">
+                      <span
+                        className={`cursor-pointer underline text-color-border-2 ${
+                          showTranslate ? '' : 'animate-bounce'
+                        }`}
+                        onClick={() => setShowTranslate(!showTranslate)}>
+                        {showTranslate ? 'Thu gọn bản dịch' : 'Xem bản dịch'}
+                      </span>
+                    </div>
 
-                    <div>
-                      <table className="table">
-                        <tr>
-                          <th>Cụm từ</th>
-                          <th>Ý nghĩa</th>
-                        </tr>
+                    {showTranslate && (
+                      <div>
+                        <div className="font-semibold underline">Vietnamese:</div>
+                        <div className="mb-2">{valueFormField?.translate}</div>
+                      </div>
+                    )}
 
-                        <tr>
-                          <td className="bold">company</td>
-                          <td>cùng nhau</td>
-                        </tr>
-
-                        <tr>
-                          <td className="bold">Climbing above</td>
-                          <td>Không ngừng leo thang</td>
-                        </tr>
-                      </table>
+                    <div className="mt-4">
+                      <Table
+                        columns={columns}
+                        dataSource={dataSource}
+                        loading={loading}
+                        paging={{
+                          ...paging,
+                          onChangePage: (page: number) => {
+                            setPaging({ ...paging, currentPage: page });
+                          }
+                        }}
+                      />
                     </div>
                   </div>
                 )}
