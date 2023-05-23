@@ -1,19 +1,16 @@
-import { Button, Popconfirm } from 'antd';
+import { Button } from 'antd';
 import { Form, Formik, FormikProps } from 'formik';
 import moment from 'moment';
 import React, { useEffect, useMemo, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { PROTECTED_ROUTES_PATH } from 'routes/RoutesPath';
-import { ButtonIcon, UploadImageButton } from 'shared/components/Button';
+import { UploadImageButton } from 'shared/components/Button';
 import { FormFieldComponent } from 'shared/components/Form';
 import { TField } from 'shared/components/Form/interface';
-import { DeleteIcon, EditIcon } from 'shared/components/Icons';
 import { Loadingv2 } from 'shared/components/Loading';
 import { WhiteBoxWrapper } from 'shared/components/common';
-import { useTableData } from 'shared/hooks/useTableData';
 import * as Yup from 'yup';
-import { requestDeletePhrase, requestPhrasesById } from '../api/phase.api';
 import { requestCreatePost, requestDetailPost, requestUpdatePost } from '../api/post.api';
 import { PhraseComp } from './PhraseComp';
 
@@ -24,14 +21,7 @@ const validateSchema = {
 export const UpdatePost: React.FC = () => {
   const { id, mode } = useParams();
   const navigate = useNavigate();
-  const [expandFilter, setExpandFilter] = useState<any>({
-    id: id
-  });
-  const { dataSource, paging, showFilter, setPaging, fetchDataSource, onToogleFilter } =
-    useTableData({
-      expandFilter,
-      fetchList: requestPhrasesById
-    });
+
   const [loading, setLoading] = useState<boolean>(false);
   const [valueFormField, setValueFormField] = useState({
     title: '',
@@ -80,68 +70,11 @@ export const UpdatePost: React.FC = () => {
     }
   });
 
-  const columns = [
-    {
-      title: 'Cụm từ',
-      keyData: 'english',
-      render: (value: string, index: number, record: any) => (
-        <div className="font-semibold cursor-pointer text-primary-color flex items-center">
-          {value}
-        </div>
-      )
-    },
-    {
-      title: 'Ý nghĩa',
-      keyData: 'phonetic',
-      render: (value: string) => <div className="font-semibold">{value}</div>
-    },
-    {
-      title: 'Action',
-      keyData: 'id',
-      render: (value: any, index: number, record: any) => (
-        <div className="flex">
-          <ButtonIcon className="mr-2">
-            <EditIcon
-              className="text-xl cursor-pointer hover:text-green-500 "
-              onClick={() => {
-                console.log('hihih');
-              }}
-            />
-          </ButtonIcon>
-
-          <ButtonIcon className="mr-2">
-            <Popconfirm
-              placement="bottom"
-              title="Bạn chắc chắn muốn xóa từ vựng?"
-              onConfirm={() => {
-                handleClickDeletePhase(record.pk_QuestionStandard_Id);
-              }}
-              okText="Xóa"
-              cancelText="Thoát"
-              okButtonProps={{ type: 'primary', danger: true }}>
-              <DeleteIcon className="hover:text-red-500  cursor-pointer text-xl" />
-            </Popconfirm>
-          </ButtonIcon>
-        </div>
-      )
-    }
-  ];
-
   useEffect(() => {
     if (id) {
       getDetailData();
     }
   }, []);
-
-  const handleClickDeletePhase = async (id: number) => {
-    try {
-      await requestDeletePhrase(id);
-      toast.success('Xóa từ vựng thành công!');
-      fetchDataSource();
-    } catch (error) {
-      console.error('Exception ' + error);
-    }
-  };
 
   const onHandleSubmit = async (values: any) => {
     try {
@@ -294,7 +227,7 @@ export const UpdatePost: React.FC = () => {
                     )}
 
                     <div className="mt-4">
-                      <PhraseComp id={id} />
+                      <PhraseComp id={id ? id : ''} />
                     </div>
                   </div>
                 )}

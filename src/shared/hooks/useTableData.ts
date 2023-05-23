@@ -6,7 +6,7 @@ interface IUseTableData {
   pageSize?: number;
 }
 export const useTableData = ({ expandFilter = {}, fetchList, pageSize = 10 }: IUseTableData) => {
-  const [dataSource, setdataSource] = useState<Array<any>>([]);
+  const [dataSource, setDataSource] = useState<Array<any>>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [showFilter, setShowFilter] = useState<boolean>(false);
   const [paging, setPaging] = useState({
@@ -29,7 +29,7 @@ export const useTableData = ({ expandFilter = {}, fetchList, pageSize = 10 }: IU
           ...expandFilter
         });
 
-        setdataSource(data?.items || []);
+        setDataSource(data?.items || []);
 
         setPaging({
           ...paging,
@@ -54,7 +54,7 @@ export const useTableData = ({ expandFilter = {}, fetchList, pageSize = 10 }: IU
     loading,
     showFilter,
     setPaging,
-    setdataSource,
+    setDataSource,
     fetchDataSource,
     onToogleFilter
   };
