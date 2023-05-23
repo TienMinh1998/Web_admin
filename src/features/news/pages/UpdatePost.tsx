@@ -2,7 +2,6 @@ import { Button, Popconfirm } from 'antd';
 import { Form, Formik, FormikProps } from 'formik';
 import moment from 'moment';
 import React, { useEffect, useMemo, useState } from 'react';
-import { AiOutlineCheckCircle } from 'react-icons/ai';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { PROTECTED_ROUTES_PATH } from 'routes/RoutesPath';
@@ -11,12 +10,12 @@ import { FormFieldComponent } from 'shared/components/Form';
 import { TField } from 'shared/components/Form/interface';
 import { DeleteIcon, EditIcon } from 'shared/components/Icons';
 import { Loadingv2 } from 'shared/components/Loading';
-import { Table } from 'shared/components/Table/Table';
 import { WhiteBoxWrapper } from 'shared/components/common';
 import { useTableData } from 'shared/hooks/useTableData';
 import * as Yup from 'yup';
-import { requestDeletePhrase, requestPhrases } from '../api/phase.api';
+import { requestDeletePhrase, requestPhrasesById } from '../api/phase.api';
 import { requestCreatePost, requestDetailPost, requestUpdatePost } from '../api/post.api';
+import { PhraseComp } from './PhraseComp';
 
 const validateSchema = {
   title: Yup.string().required('Hãy nhập tiêu đề'),
@@ -26,14 +25,12 @@ export const UpdatePost: React.FC = () => {
   const { id, mode } = useParams();
   const navigate = useNavigate();
   const [expandFilter, setExpandFilter] = useState<any>({
-    columnSort: 'created_on',
-    isDesc: true,
-    date: ''
+    id: id
   });
   const { dataSource, paging, showFilter, setPaging, fetchDataSource, onToogleFilter } =
     useTableData({
       expandFilter,
-      fetchList: requestPhrases
+      fetchList: requestPhrasesById
     });
   const [loading, setLoading] = useState<boolean>(false);
   const [valueFormField, setValueFormField] = useState({
@@ -89,13 +86,6 @@ export const UpdatePost: React.FC = () => {
       keyData: 'english',
       render: (value: string, index: number, record: any) => (
         <div className="font-semibold cursor-pointer text-primary-color flex items-center">
-          {record.added ? (
-            <div className="mr-1">
-              <AiOutlineCheckCircle className="font-semibold text-green-500  text-xl" />
-            </div>
-          ) : (
-            <></>
-          )}
           {value}
         </div>
       )
@@ -304,17 +294,7 @@ export const UpdatePost: React.FC = () => {
                     )}
 
                     <div className="mt-4">
-                      <Table
-                        columns={columns}
-                        dataSource={dataSource}
-                        loading={loading}
-                        paging={{
-                          ...paging,
-                          onChangePage: (page: number) => {
-                            setPaging({ ...paging, currentPage: page });
-                          }
-                        }}
-                      />
+                      <PhraseComp id={id} />
                     </div>
                   </div>
                 )}

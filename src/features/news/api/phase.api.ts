@@ -9,6 +9,10 @@ export const requestPhrases = (payload: unknown): Promise<ResponseApi<any>> => {
   return ApiBaseService.post(`${URL}/lists`, payload);
 };
 
+export const requestPhrasesById = (payload: any): Promise<ResponseApi<any>> => {
+  return ApiBaseService.get(`${URL}/${payload.id}`);
+};
+
 export const requestDeletePhrase = (id: string | number): Promise<ResponseApi<any>> => {
   return ApiBaseService.delete(`${URL}/${id}`);
 };
