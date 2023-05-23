@@ -165,9 +165,9 @@ export const PhraseComp: React.FC<Props> = ({ id }) => {
             </Button>
 
             {!record.isNewWord ? (
-              <Popconfirm title="Sure to cancel?" onConfirm={cancel}>
-                <a>Cancel</a>
-              </Popconfirm>
+              <span onClick={cancel} className="cursor-pointer">
+                Cancel
+              </span>
             ) : (
               ''
             )}
