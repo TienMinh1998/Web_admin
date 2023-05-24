@@ -39,3 +39,7 @@
 .sub-title {
   opacity: 0.8;
 }
+
+.custom-table .ant-table-cell {
+  padding: 8px !important;
+}

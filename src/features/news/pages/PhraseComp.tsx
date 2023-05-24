@@ -276,6 +276,7 @@ export const PhraseComp: React.FC<Props> = ({ id }) => {
       />
       <Form form={form} component={false}>
         <Table
+          className="custom-table"
           components={{
             body: {
               cell: EditableCell

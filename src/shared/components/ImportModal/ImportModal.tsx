@@ -1,4 +1,4 @@
-import { Modal, Upload } from 'antd';
+import { Button, Modal, Upload } from 'antd';
 import { UploadProps } from 'antd/lib/upload';
 import React, { useState } from 'react';
 import { AiOutlineInbox } from 'react-icons/ai';
@@ -32,10 +32,21 @@ export const ImportModal: React.FC<Props> = ({ title, isModalOpen, handleOk, han
         destroyOnClose
         title={title}
         open={isModalOpen}
-        onOk={() => {
-          handleOk && handleOk(info);
-        }}
-        onCancel={handleCancel}>
+        onCancel={handleCancel}
+        footer={[
+          <Button key="back" onClick={handleCancel}>
+            Hủy
+          </Button>,
+          <Button
+            key="submit"
+            type="primary"
+            className="bg-[#1677ff]"
+            onClick={() => {
+              handleOk && handleOk(info);
+            }}>
+            Lưu
+          </Button>
+        ]}>
         <Dragger {...importProps}>
           <p className="flex justify-center">
             <AiOutlineInbox className="text-4xl" />

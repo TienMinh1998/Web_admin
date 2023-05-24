@@ -164,7 +164,7 @@ export const UpdatePost: React.FC = () => {
                       </Button>
                     )}
                     {!allowEdit && (
-                      <Button type="primary" onClick={goToEdit}>
+                      <Button type="primary" onClick={goToEdit} className="bg-[#1677ff]">
                         Sửa
                       </Button>
                     )}
