@@ -32,7 +32,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
   children,
   ...restProps
 }) => {
-  const inputNode = <Input />;
+  const inputNode = <Input placeholder="Nhập thông tin" />;
 
   return (
     <td {...restProps}>
@@ -221,8 +221,8 @@ export const PhraseComp: React.FC<Props> = ({ id }) => {
   const handleAdd = () => {
     const newData = {
       key: dataSource.length,
-      word: 'new word',
-      definition: 'new word',
+      word: '',
+      definition: '',
       isNewWord: true
     };
     setDataSource([...dataSource, newData]);
