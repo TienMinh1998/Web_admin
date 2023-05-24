@@ -3,8 +3,10 @@ import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { ButtonIcon } from 'shared/components/Button';
 import { DeleteIcon, EditIcon } from 'shared/components/Icons';
+import { ImportModal } from 'shared/components/ImportModal';
 import { useTableData } from 'shared/hooks/useTableData';
 import {
+  importPhrases,
   requestCreatePhrases,
   requestDeletePhrase,
   requestPhrases,
@@ -20,7 +22,6 @@ interface Item {
   definition: number;
   isNewWord?: boolean;
 }
-
 const EditableCell: React.FC<EditableCellProps> = ({
   editing,
   dataIndex,
@@ -60,6 +61,7 @@ export const PhraseComp: React.FC<Props> = ({ id }) => {
       readingId: id
     }
   });
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { dataSource, paging, setPaging, fetchDataSource, setDataSource, onToogleFilter } =
     useTableData({
       expandFilter,
@@ -224,6 +226,22 @@ export const PhraseComp: React.FC<Props> = ({ id }) => {
     setDataSource([...dataSource, newData]);
   };
 
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+
+  const importFile = async (file: any) => {
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('readingId', id);
+      const res = await importPhrases(formData);
+      console.log('res', res);
+    } catch (error) {
+      console.log('error', error);
+    }
+  };
+
   return (
     <div>
       <div className="flex justify-end">
@@ -235,13 +253,19 @@ export const PhraseComp: React.FC<Props> = ({ id }) => {
           Thêm từ
         </Button>
         <Button
-          onClick={handleAdd}
+          onClick={toggleModal}
           type="primary"
           className="mr-4 mb-4"
           style={{ marginBottom: 16, backgroundColor: '#1677ff' }}>
           Import
         </Button>
       </div>
+      <ImportModal
+        isModalOpen={isModalOpen}
+        title="Import Phrase"
+        handleCancel={toggleModal}
+        handleOk={importFile}
+      />
       <Form form={form} component={false}>
         <Table
           components={{

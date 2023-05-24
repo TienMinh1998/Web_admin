@@ -8,6 +8,9 @@ const URL = `${urlApiServices}/phrase`;
 export const requestPhrases = (payload: unknown): Promise<ResponseApi<any>> => {
   return ApiBaseService.post(`${URL}/lists`, payload);
 };
+export const importPhrases = (payload: unknown): Promise<ResponseApi<any>> => {
+  return ApiBaseService.post(`${URL}/import/excel`, payload);
+};
 
 export const requestCreatePhrases = (payload: unknown): Promise<ResponseApi<any>> => {
   return ApiBaseService.post(`${URL}/add`, payload);
