@@ -225,7 +225,7 @@ export const PhraseComp: React.FC<Props> = ({ id }) => {
       definition: '',
       isNewWord: true
     };
-    setDataSource([...dataSource, newData]);
+    setDataSource([newData, ...dataSource]);
     setEditingKey(dataSource.length);
   };
 

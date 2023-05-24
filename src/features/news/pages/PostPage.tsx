@@ -24,7 +24,7 @@ export const PostPage: React.FC = () => {
     useTableData({
       expandFilter,
       fetchList: requestPosts,
-      pageSize: 1000
+      pageSize: 100
     });
   const formFilter = {
     date: {
