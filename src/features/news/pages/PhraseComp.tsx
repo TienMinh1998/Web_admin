@@ -77,17 +77,19 @@ export const PhraseComp: React.FC<Props> = ({ id }) => {
     }
   };
   const [form] = Form.useForm();
-  const [editingKey, setEditingKey] = useState('');
+  const [editingKey, setEditingKey] = useState<number | null>(null);
 
-  const isEditing = (record: Item) => record.id === editingKey;
+  const isEditing = (index: number) => {
+    return index === editingKey;
+  };
 
-  const edit = (record: any) => {
+  const edit = (record: any, index: number) => {
     form.setFieldsValue({ word: '', definition: '', ...record });
-    setEditingKey(record.id);
+    setEditingKey(index);
   };
 
   const cancel = () => {
-    setEditingKey('');
+    setEditingKey(null);
   };
 
   const handleSave = async (record: Item) => {
@@ -112,7 +114,7 @@ export const PhraseComp: React.FC<Props> = ({ id }) => {
     } catch (errInfo) {
       console.log('Validate Failed:', errInfo);
     } finally {
-      setEditingKey('');
+      setEditingKey(null);
     }
   };
 
@@ -155,8 +157,8 @@ export const PhraseComp: React.FC<Props> = ({ id }) => {
     {
       title: 'Operation',
       dataIndex: 'operation',
-      render: (_: any, record: Item) => {
-        const editable = isEditing(record);
+      render: (_: any, record: Item, index: number) => {
+        const editable = isEditing(index);
         return editable ? (
           <>
             <Button
@@ -179,7 +181,7 @@ export const PhraseComp: React.FC<Props> = ({ id }) => {
             <ButtonIcon className="mr-2">
               <EditIcon
                 className="text-xl cursor-pointer hover:text-green-500 "
-                onClick={() => edit(record)}
+                onClick={() => edit(record, index)}
               />
             </ButtonIcon>
             <ButtonIcon className="mr-2">
@@ -207,12 +209,12 @@ export const PhraseComp: React.FC<Props> = ({ id }) => {
     }
     return {
       ...col,
-      onCell: (record: Item) => ({
+      onCell: (record: Item, rowIndex: any) => ({
         record,
         inputType: 'text',
         dataIndex: col.dataIndex,
         title: col.title,
-        editing: isEditing(record)
+        editing: isEditing(rowIndex)
       })
     };
   });
@@ -224,6 +226,7 @@ export const PhraseComp: React.FC<Props> = ({ id }) => {
       isNewWord: true
     };
     setDataSource([...dataSource, newData]);
+    setEditingKey(dataSource.length);
   };
 
   const toggleModal = () => {
@@ -233,10 +236,15 @@ export const PhraseComp: React.FC<Props> = ({ id }) => {
   const importFile = async (file: any) => {
     try {
       const formData = new FormData();
-      formData.append('file', file);
+      formData.append('file', file.originFileObj);
       formData.append('readingId', id);
-      const res = await importPhrases(formData);
-      console.log('res', res);
+      const res: any = await importPhrases(formData);
+      if (res?.status === 200) {
+        toast.success('Cập nhật thành công');
+        fetchDataSource();
+      } else {
+        toast.error(res.message);
+      }
     } catch (error) {
       console.log('error', error);
     }
@@ -278,7 +286,10 @@ export const PhraseComp: React.FC<Props> = ({ id }) => {
           columns={mergedColumns}
           rowClassName="editable-row"
           pagination={{
-            onChange: cancel
+            ...paging,
+            onChange: (page: any) => {
+              setExpandFilter({ ...paging, pageIndex: page });
+            }
           }}
         />
       </Form>

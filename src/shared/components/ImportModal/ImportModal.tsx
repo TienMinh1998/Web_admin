@@ -20,17 +20,7 @@ export const ImportModal: React.FC<Props> = ({ title, isModalOpen, handleOk, han
     multiple: false,
     action: 'https://www.mocky.io/v2/5cc8019d300000980a055e76',
     onChange(info: any) {
-      console.log('info', info);
-
-      const { status } = info.file;
-      if (status !== 'uploading') {
-        console.log(info.file, info.fileList);
-      }
-      if (status === 'done') {
-        setInfor(info.file);
-      } else if (status === 'error') {
-        toast.error(`${info.file.name} file upload failed.`);
-      }
+      setInfor(info.file);
     },
     onDrop(e) {
       console.log('Dropped files', e.dataTransfer.files);
@@ -43,7 +33,7 @@ export const ImportModal: React.FC<Props> = ({ title, isModalOpen, handleOk, han
         title={title}
         open={isModalOpen}
         onOk={() => {
-          handleOk && handleOk(info.file);
+          handleOk && handleOk(info);
         }}
         onCancel={handleCancel}>
         <Dragger {...importProps}>
