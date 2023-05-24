@@ -75,7 +75,7 @@ export const PostPage: React.FC = () => {
                   setSearchText(e.target.value);
                 }}
                 onSearch={() => {
-                  setExpandFilter({ ...expandFilter, title: searchText, page: 1 });
+                  setExpandFilter({ ...expandFilter, page: 1, search: { title: searchText } });
                 }}
               />
             </div>
