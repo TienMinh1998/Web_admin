@@ -159,7 +159,7 @@ export const UpdatePost: React.FC = () => {
                   <span className="text-lg font-bold">{pageTitle()} bài viết</span>
                   <div>
                     {allowEdit && (
-                      <Button type="primary" htmlType="submit">
+                      <Button type="primary" htmlType="submit" className="bg-[#1677ff]">
                         Lưu
                       </Button>
                     )}

@@ -4,13 +4,13 @@ import { useNavigate } from 'react-router-dom';
 import { PROTECTED_ROUTES_PATH } from 'routes/RoutesPath';
 import { Button } from 'shared/components/Button';
 import { Loadingv1 } from 'shared/components/Loading';
-import { HeaderPage } from 'shared/components/common';
+import { HeaderPage, WhiteBoxWrapper } from 'shared/components/common';
 import { useTableData } from 'shared/hooks/useTableData';
 import { requestPosts } from '../api/post.api';
 import { PostComp } from './PostComp';
 import { InputSearch } from 'shared/components/Input';
 import FilterPage from 'shared/components/common/FilterPage';
-import { DatePicker } from 'antd';
+import { DatePicker, Pagination } from 'antd';
 import moment from 'moment';
 
 const { RangePicker } = DatePicker;
@@ -87,7 +87,15 @@ export const PostPage: React.FC = () => {
           {showFilter && <FilterPage filters={formFilter} />}
         </>
       </HeaderPage>
-
+      <WhiteBoxWrapper>
+        <Pagination
+          defaultCurrent={paging.currentPage}
+          total={paging.total}
+          onChange={(page: number) => {
+            setExpandFilter({ ...expandFilter, page });
+          }}
+        />
+      </WhiteBoxWrapper>
       <Loadingv1 loading={loading}>
         <div className="grid grid-cols-12 gap-x-2 gap-y-4 mt-4">
           {dataSource.length > 0 ? (
