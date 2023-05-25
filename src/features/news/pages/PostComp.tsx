@@ -1,4 +1,4 @@
-import { Button, Popconfirm, Tag, Tooltip } from 'antd';
+import { Button, Popconfirm, Rate, Tag, Tooltip } from 'antd';
 import React from 'react';
 import { GrCircleInformation } from 'react-icons/gr';
 import { useNavigate } from 'react-router-dom';
@@ -47,8 +47,8 @@ export const PostComp: React.FC<Props> = ({ data, openModalUpdate, fetchDataSour
       </div>
 
       <div className="p-2 flex items-center justify-between mt-2">
-        {/* <Rate disabled defaultValue={2} /> */}
-        <Tag color="blue">7.5</Tag>
+        <Rate disabled defaultValue={data?.band ? data?.band : 0} />
+        {/* <Tag color="blue">{data?.band}</Tag> */}
         <Tooltip title={data?.definetion}>
           <GrCircleInformation className="text-primary-color cursor-pointer" />
         </Tooltip>
