@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import { PROTECTED_ROUTES_PATH } from 'routes/RoutesPath';
 import { requestDeletePost } from '../api/post.api';
 import '../style.css';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
 
 type Props = { data: any; openModalUpdate?: (id: string) => void; fetchDataSource: any };
 
@@ -28,33 +29,10 @@ export const PostComp: React.FC<Props> = ({ data, openModalUpdate, fetchDataSour
 
   return (
     <div className="col-span-12 tablet:col-span-4 laptop:col-span-3 desktop:col-span-2 bg-white shadow-xl flex flex-col justify-between rounded-md text-base">
-      <div
-        className="w-full aspect-square p-1 cursor-pointer"
-        onClick={() => {
-          goToDetail(data?.id);
-        }}>
-        <img src={data?.image} className="w-full h-full aspect-square object-cover rounded-lg" />
-      </div>
-
-      <div
-        className="py-1 px-2 h-full title-item cursor-pointer"
-        onClick={() => {
-          goToDetail(data?.id);
-        }}>
-        <span className="font-bold block-ellipsis" title={data?.title}>
-          {data?.title}
-        </span>
-      </div>
-
-      <div className="p-2 flex items-center justify-between mt-2">
-        <Rate disabled defaultValue={data?.band ? data?.band : 0} />
-        {/* <Tag color="blue">{data?.band}</Tag> */}
-        <Tooltip title={data?.definetion}>
-          <GrCircleInformation className="text-primary-color cursor-pointer" />
-        </Tooltip>
-      </div>
-      <div className="flex justify-center border-t p-3 w-full">
-        <Button className="delete-button">
+      <div className="w-full aspect-square cursor-pointer relative wrap-img">
+        <img src={data?.image} className="object-cover view-img" />
+        <div className="above-img">
+          <Tag color="blue">Brand {data?.band}</Tag>
           <Popconfirm
             placement="bottom"
             title="Bạn có muốn xóa bài biết này?"
@@ -62,9 +40,26 @@ export const PostComp: React.FC<Props> = ({ data, openModalUpdate, fetchDataSour
             cancelText="Quay lại"
             okText="Xác nhận"
             okButtonProps={{ type: 'primary', danger: true }}>
-            Xóa
+            <AiOutlineCloseCircle className="cursor-pointer text-red-500 absolute top-1 right-1" />
           </Popconfirm>
-        </Button>
+        </div>
+
+        <span
+          className="font-semibold block-ellipsis title-item p-1 absolute bottom-0 text-white"
+          title={data?.title}
+          onClick={() => {
+            goToDetail(data?.id);
+          }}>
+          {data?.title}
+        </span>
+      </div>
+
+      <div className="p-2 flex items-center justify-between">
+        <Rate disabled defaultValue={data?.band ? data?.band : 0} />
+        {/* <Tag color="blue">{data?.band}</Tag> */}
+        <Tooltip title={data?.definetion}>
+          <GrCircleInformation className="text-primary-color cursor-pointer" />
+        </Tooltip>
       </div>
     </div>
   );
