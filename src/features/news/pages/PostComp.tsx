@@ -56,7 +56,6 @@ export const PostComp: React.FC<Props> = ({ data, openModalUpdate, fetchDataSour
 
       <div className="p-2 flex items-center justify-between">
         <Rate disabled defaultValue={data?.band ? data?.band : 0} />
-        {/* <Tag color="blue">{data?.band}</Tag> */}
         <Tooltip title={data?.definetion}>
           <GrCircleInformation className="text-primary-color cursor-pointer" />
         </Tooltip>

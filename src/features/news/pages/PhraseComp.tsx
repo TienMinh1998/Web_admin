@@ -219,14 +219,23 @@ export const PhraseComp: React.FC<Props> = ({ id }) => {
     };
   });
   const handleAdd = () => {
-    const newData = {
-      key: dataSource.length,
-      word: '',
-      definition: '',
-      isNewWord: true
-    };
-    setDataSource([newData, ...dataSource]);
-    setEditingKey(dataSource.length);
+    if (editingKey != null) {
+      toast.error('Còn cụm từ chưa được lưu!');
+      return;
+    }
+    form.setFieldsValue({ word: '', definition: '' });
+    const newData = [
+      {
+        key: dataSource.length,
+        word: '',
+        definition: '',
+        isNewWord: true
+      },
+      ...dataSource
+    ];
+
+    setDataSource(newData);
+    setEditingKey(0);
   };
 
   const toggleModal = () => {

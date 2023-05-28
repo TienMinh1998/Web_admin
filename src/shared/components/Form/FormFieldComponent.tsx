@@ -6,7 +6,7 @@ import { TFormField } from './interface';
 
 const components: any = {
   Input: Input,
-  BaseInputNumber: BaseInputNumber,
+  InputNumber: BaseInputNumber,
   TextArea: TextArea,
   BaseSelect: BaseSelect
 };
@@ -47,7 +47,7 @@ export const FormFieldComponent: React.FC<TFormField> = ({ formField, formik }) 
           );
         }
 
-        if (field.component === 'BaseInputNumber') {
+        if (field.component === 'InputNumber') {
           return (
             <div key={field.nameField} className={`${field.className || 'col-span-12'}`}>
               <div

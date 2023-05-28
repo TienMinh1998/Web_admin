@@ -26,6 +26,8 @@ export const UpdatePost: React.FC = () => {
   const [valueFormField, setValueFormField] = useState({
     title: '',
     content: '',
+    taskName: '',
+    band: 0,
     definetion: '',
     translate: '',
     createdDate: ''
@@ -51,6 +53,20 @@ export const UpdatePost: React.FC = () => {
       label: '<span style="color:red">*</span> Dịch tiêu đề',
       component: 'Input',
       placeholder: 'Nhập định nghĩa'
+    },
+    taskName: {
+      nameField: 'taskName',
+      className: 'col-span-6',
+      label: '<span style="color:red">*</span> Đề tài',
+      component: 'Input',
+      placeholder: 'Nhập đề tài'
+    },
+    band: {
+      nameField: 'band',
+      className: 'col-span-6',
+      label: '<span style="color:red">*</span> Thang điểm',
+      component: 'InputNumber',
+      placeholder: 'Nhập thang điểm'
     },
     content: {
       nameField: 'content',
