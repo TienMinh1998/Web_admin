@@ -172,13 +172,7 @@ export const UpdatePost: React.FC = () => {
             return (
               <Form>
                 <WhiteBoxWrapper className="relative bottom-0 flex justify-between items-center flex-1">
-                  <span className="text-lg font-bold">
-                    {id
-                      ? valueFormField?.taskName
-                        ? 'Đề bài: ' + valueFormField?.taskName
-                        : 'Cập nhật bài viết'
-                      : 'Thêm bài viết'}
-                  </span>
+                  <span className="text-lg font-bold">{pageTitle() + ' bài viết'}</span>
                   <div>
                     {allowEdit && (
                       <Button type="primary" htmlType="submit" className="bg-[#1677ff]">
@@ -222,13 +216,12 @@ export const UpdatePost: React.FC = () => {
                   </div>
                 ) : (
                   <div className="bg-white py-10 px-6 text-lg">
-
                     <div className="line-task-name">
-                      <span className='task-name'>
-                        Đề bài : {valueFormField?.taskName}
+                      <span className="task-name italic">
+                        <span className="font-semibold">Đề bài:</span> {valueFormField?.taskName}
                       </span>
                     </div>
-                    <div className="text-center font-semibold text-3xl">
+                    <div className="text-center font-semibold text-3xl mt-6">
                       {valueFormField?.title}
                     </div>
                     <div className="text-center">({valueFormField?.definetion})</div>
@@ -239,8 +232,9 @@ export const UpdatePost: React.FC = () => {
                     <div className="mb-2">{valueFormField?.content}</div>
                     <div className="flex justify-center">
                       <span
-                        className={`cursor-pointer underline text-color-border-2 ${showTranslate ? '' : 'animate-bounce'
-                          }`}
+                        className={`cursor-pointer underline text-color-border-2 ${
+                          showTranslate ? '' : 'animate-bounce'
+                        }`}
                         onClick={() => setShowTranslate(!showTranslate)}>
                         {showTranslate ? 'Thu gọn bản dịch' : 'Xem bản dịch'}
                       </span>
