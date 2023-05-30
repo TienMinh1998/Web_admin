@@ -298,7 +298,7 @@ export const PhraseComp: React.FC<Props> = ({ id }) => {
           pagination={{
             ...paging,
             onChange: (page: any) => {
-              setExpandFilter({ ...paging, pageIndex: page });
+              setExpandFilter({ ...expandFilter, pageIndex: page });
             }
           }}
         />

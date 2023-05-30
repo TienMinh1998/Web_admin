@@ -57,9 +57,9 @@ export const UpdatePost: React.FC = () => {
     taskName: {
       nameField: 'taskName',
       className: 'col-span-6',
-      label: '<span style="color:red">*</span> Đề tài',
+      label: '<span style="color:red">*</span> Đề bài',
       component: 'Input',
-      placeholder: 'Nhập đề tài'
+      placeholder: 'Nhập đề bài'
     },
     band: {
       nameField: 'band',
@@ -172,7 +172,13 @@ export const UpdatePost: React.FC = () => {
             return (
               <Form>
                 <WhiteBoxWrapper className="relative bottom-0 flex justify-between items-center flex-1">
-                  <span className="text-lg font-bold">{pageTitle()} bài viết</span>
+                  <span className="text-lg font-bold">
+                    {id
+                      ? valueFormField?.taskName
+                        ? 'Đề bài: ' + valueFormField?.taskName
+                        : 'Cập nhật bài viết'
+                      : 'Thêm bài viết'}
+                  </span>
                   <div>
                     {allowEdit && (
                       <Button type="primary" htmlType="submit" className="bg-[#1677ff]">
