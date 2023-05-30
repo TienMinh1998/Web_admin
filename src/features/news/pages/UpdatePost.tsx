@@ -225,10 +225,10 @@ export const UpdatePost: React.FC = () => {
                       {valueFormField?.title}
                     </div>
                     <div className="text-center">({valueFormField?.definetion})</div>
-                    <div className="w-full text-end text-zinc-400 font-semibold mb-3">
+                    <div className="w-full text-end text-zinc-400 mb-3 italic">
                       {moment(valueFormField?.createdDate).format('HH:mm DD/MM/YYYY')}
                     </div>
-                    <div className="font-semibold underline">English:</div>
+                    <div className="font-semibold underline text-second-color italic">English:</div>
                     <div className="mb-2">{valueFormField?.content}</div>
                     <div className="flex justify-center">
                       <span
@@ -242,7 +242,9 @@ export const UpdatePost: React.FC = () => {
 
                     {showTranslate && (
                       <div>
-                        <div className="font-semibold underline">Vietnamese:</div>
+                        <div className="font-semibold underline text-second-color italic">
+                          Vietnamese:
+                        </div>
                         <div className="mb-2">{valueFormField?.translate}</div>
                       </div>
                     )}
