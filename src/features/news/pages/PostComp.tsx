@@ -28,11 +28,20 @@ export const PostComp: React.FC<Props> = ({ data, openModalUpdate, fetchDataSour
   };
 
   return (
-    <div className="col-span-12 tablet:col-span-4 laptop:col-span-3 desktop:col-span-2 bg-white shadow-xl flex flex-col justify-between rounded-md text-base">
+    <div className="col-span-12 tablet:col-span-4 laptop:col-span-3 desktop:col-span-2 bg-white shadow-xl flex flex-col justify-between rounded-md text-base"
+      onClick={() => {
+        goToDetail(data?.id)
+      }}
+    >
       <div className="w-full aspect-square cursor-pointer relative wrap-img">
         <img src={data?.image} className="object-cover view-img" />
         <div className="above-img">
-          <Tag color="blue">Brand {data?.band}</Tag>
+          <Tag color="blue">
+            <span style={{ padding: 5 }}>
+              Brand {data?.band * 2}
+            </span>
+
+          </Tag>
           <Popconfirm
             placement="bottom"
             title="Bạn có muốn xóa bài biết này?"
@@ -46,10 +55,7 @@ export const PostComp: React.FC<Props> = ({ data, openModalUpdate, fetchDataSour
 
         <span
           className="font-semibold block-ellipsis title-item p-1 absolute bottom-0 text-white"
-          title={data?.title}
-          onClick={() => {
-            goToDetail(data?.id);
-          }}>
+          title={data?.title}>
           {data?.title}
         </span>
       </div>
