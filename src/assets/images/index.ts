@@ -3,6 +3,7 @@ const images = {
   logo_ver1: require('./background/logo.jpg'),
   background_img: require('./background/7171197.jpg'),
   avatar_default: require('./avatars/5.png'),
-  ava_admin: require('./avatars/ava_admin.jpg')
+  ava_admin: require('./avatars/ava_admin.jpg'),
+  logo_ver2: require('./background/logo.png')
 };
 export default images;

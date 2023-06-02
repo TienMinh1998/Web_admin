@@ -9,7 +9,7 @@ import { Head } from 'shared/container/Head';
 import { CliCookieService, CLI_COOKIE_KEYS } from 'shared/services/cli-cookie';
 import * as Yup from 'yup';
 import { requestLogin } from '../api/auth.api';
-
+import './login.css'
 export const Login = () => {
   const navigate: NavigateFunction = useNavigate();
   const formik = useFormik({
@@ -32,24 +32,30 @@ export const Login = () => {
     }
   });
   return (
-    <div>
-      <Head title="Welcome to login" />
-      <ContainerAuth>
-        <div className="w-full h-screen flex justify-center ">
-          <div className="mx-auto my-auto">
-            <div className="w-[420px] p-10 bg-white rounded-2xl shadow">
-              <div className="flex justify-center">
-                <img alt="logo" src={R.images.logo_ver1} width={150} />
-              </div>
-              <div className="text-center py-4 font-semibold text-xl italic text-primary-color">
-                Xin chào đến với trang quản trị
-              </div>
+
+    <ContainerAuth>
+      <div className='main'>
+        <Head title="VTH-Sing in" />
+        <div className="container">
+          <div className='login-item'>
+            <img className='my-image' alt="logo" src={R.images.logo_ver2} />
+          </div>
+          <div className='login-item'>
+            <div className='login-item-main'>
               <form onSubmit={formik.handleSubmit}>
                 <div>
-                  <div className="mt-2">
-                    <div className="mb-1 text-medium-grey font-medium">Tài khoản</div>
-                    <Input
-                      placeholder="Nhập tên đăng nhập"
+                  <div className='row-item'>
+                    <h3 className='row-item-title'>Đăng nhập</h3>
+                    <h4 className='row-item-title-detail'>Đăng nhập để sử dụng hệ thống</h4>
+                  </div>
+
+                  <div className="row-item">
+                    <span className='row-icon'>
+                      <i className="fa-solid fa-user"></i>
+                    </span>
+                    <input
+                      className='input'
+                      placeholder="Enter user name"
                       id="userName"
                       name="userName"
                       onChange={formik.handleChange}
@@ -61,40 +67,39 @@ export const Login = () => {
                       )}
                     </div>
                   </div>
-                  <div className="mt-2 ">
-                    <div className="mb-1 text-medium-grey font-medium">Mật khẩu</div>
-                    <InputPassword
+                  <div className="row-item">
+                    <span className='row-icon'>
+                      <i className="fa-solid fa-lock"></i>
+                    </span>
+                    <input
+                      className='input'
                       placeholder="Nhập mật khẩu"
                       id="password"
                       name="password"
+                      type="password"
                       onChange={formik.handleChange}
                       value={formik.values.password}
                     />
-                    <div className="text-red-500 mt-1">
+                    <div>
                       {formik.errors.password && formik.touched.password && (
                         <p>{formik.errors.password}</p>
                       )}
                     </div>
                   </div>
                 </div>
-                <div className="text-center p-4 ">
-                  <span className="font-bold text-primary-color cursor-pointer ">
-                    FORGET PASSWORD
-                  </span>
-                </div>
-                <div>
+                <div className='button-login'>
                   <Button
-                    className="w-full p-4 bg-primary-color"
-                    htmlType="submit"
-                    style={{ width: '100%' }}>
-                    Login
+                    style={{ width: '100%' }}
+                    htmlType="submit"> Đăng nhập
                   </Button>
                 </div>
               </form>
             </div>
+
           </div>
         </div>
-      </ContainerAuth>
-    </div>
+      </div>
+    </ContainerAuth>
+
   );
 };
