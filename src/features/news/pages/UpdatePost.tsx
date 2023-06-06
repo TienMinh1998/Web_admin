@@ -13,6 +13,7 @@ import { WhiteBoxWrapper } from 'shared/components/common';
 import * as Yup from 'yup';
 import { requestCreatePost, requestDetailPost, requestUpdatePost } from '../api/post.api';
 import { PhraseComp } from './PhraseComp';
+import EditorComponent from 'shared/components/editor/EditorComponent';
 
 const validateSchema = {
   title: Yup.string().required('Hãy nhập tiêu đề'),
@@ -27,6 +28,7 @@ export const UpdatePost: React.FC = () => {
     title: '',
     content: '',
     taskName: '',
+    type: '',
     band: 0,
     definetion: '',
     translate: '',
@@ -61,6 +63,19 @@ export const UpdatePost: React.FC = () => {
       component: 'Input',
       placeholder: 'Nhập đề bài'
     },
+    type: {
+      nameField: 'type',
+      className: 'col-span-6',
+      label: '<span style="color:red">*</span> Loại',
+      component: 'Select',
+      placeholder: 'Chọn loại',
+      options: [
+        { value: '1', label: 'Writing' },
+        { value: '2', label: 'Listening' },
+        { value: '3', label: 'Reading' },
+        { value: '4', label: 'Different' }
+      ]
+    },
     band: {
       nameField: 'band',
       className: 'col-span-6',
@@ -71,16 +86,16 @@ export const UpdatePost: React.FC = () => {
     content: {
       nameField: 'content',
       className: 'col-span-12',
-      label: 'Nội dung',
-      component: 'TextArea',
+      label: `<div className="font-semibold underline text-second-color italic">Nội dung:</div>`,
+      component: 'EditorComponent',
       placeholder: 'Nhập nội dung bài viết',
       minRows: 14
     },
     translate: {
       nameField: 'translate',
       className: 'col-span-12',
-      label: 'Bản dịch',
-      component: 'TextArea',
+      label: `<div className="font-semibold underline text-second-color italic">Bản dịch:</div>`,
+      component: 'EditorComponent',
       placeholder: 'Nhập nội dung bản dịch',
       minRows: 14
     }
@@ -229,7 +244,9 @@ export const UpdatePost: React.FC = () => {
                       {moment(valueFormField?.createdDate).format('HH:mm DD/MM/YYYY')}
                     </div>
                     <div className="font-semibold underline text-second-color italic">English:</div>
-                    <div className="mb-2">{valueFormField?.content}</div>
+                    <div
+                      className="mb-2"
+                      dangerouslySetInnerHTML={{ __html: valueFormField?.content || '' }}></div>
                     <div className="flex justify-center">
                       <span
                         className={`cursor-pointer underline text-color-border-2 ${
@@ -245,7 +262,11 @@ export const UpdatePost: React.FC = () => {
                         <div className="font-semibold underline text-second-color italic">
                           Vietnamese:
                         </div>
-                        <div className="mb-2">{valueFormField?.translate}</div>
+                        <div
+                          className="mb-2"
+                          dangerouslySetInnerHTML={{
+                            __html: valueFormField?.translate || ''
+                          }}></div>
                       </div>
                     )}
 

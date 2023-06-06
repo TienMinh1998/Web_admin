@@ -3,12 +3,16 @@ import React from 'react';
 import { BaseInputNumber, BaseSelect } from 'shared/styled-components';
 import { Input, TextArea } from '../Input';
 import { TFormField } from './interface';
+import { Select } from 'antd';
+import EditorComponent from '../editor/EditorComponent';
 
 const components: any = {
   Input: Input,
   InputNumber: BaseInputNumber,
   TextArea: TextArea,
-  BaseSelect: BaseSelect
+  BaseSelect: BaseSelect,
+  Select: Select,
+  EditorComponent: EditorComponent
 };
 
 export const FormFieldComponent: React.FC<TFormField> = ({ formField, formik }) => {
@@ -47,7 +51,64 @@ export const FormFieldComponent: React.FC<TFormField> = ({ formField, formik }) 
           );
         }
 
+        if (field.component === 'Select') {
+          return (
+            <div key={field.nameField} className={`${field.className || 'col-span-12'}`}>
+              <div
+                className="text-sm mb-2 font-semibold"
+                dangerouslySetInnerHTML={{ __html: field.label || '' }}
+              />
+              <div className="grid col-span-6">
+                <Field
+                  key={field.nameField}
+                  name={field.nameField}
+                  id={field.nameField}
+                  placeholder={field.placeholder}
+                  options={field.options}
+                  style={{ width: '100%' }}
+                  className="w-full"
+                  as={Select}
+                  onChange={(value: string | number) => {
+                    formik.setFieldValue(field.nameField, value);
+                  }}
+                />
+                <ErrorMessage name={field.nameField}>
+                  {(msg) => <div className="text-red-400 mt-1">{msg}</div>}
+                </ErrorMessage>
+              </div>
+            </div>
+          );
+        }
+
         if (field.component === 'InputNumber') {
+          return (
+            <div key={field.nameField} className={`${field.className || 'col-span-12'}`}>
+              <div
+                className="text-sm mb-2 font-semibold"
+                dangerouslySetInnerHTML={{ __html: field.label || '' }}
+              />
+              <div className="grid col-span-6">
+                <Field
+                  key={field.nameField}
+                  name={field.nameField}
+                  id={field.nameField}
+                  placeholder={field.placeholder}
+                  style={{ width: '100%' }}
+                  className="w-full"
+                  as={Component}
+                  onChange={(value: number) => {
+                    formik.setFieldValue(field.nameField, value);
+                  }}
+                />
+                <ErrorMessage name={field.nameField}>
+                  {(msg) => <div className="text-red-400 mt-1">{msg}</div>}
+                </ErrorMessage>
+              </div>
+            </div>
+          );
+        }
+
+        if (field.component === 'EditorComponent') {
           return (
             <div key={field.nameField} className={`${field.className || 'col-span-12'}`}>
               <div
