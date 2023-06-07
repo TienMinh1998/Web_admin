@@ -32,7 +32,8 @@ export const UpdatePost: React.FC = () => {
     band: 0,
     definetion: '',
     translate: '',
-    createdDate: ''
+    createdDate: '',
+    image: ''
   });
   const [loadingPage, setLoadingPage] = useState<boolean>(false);
   const [showTranslate, setShowTranslate] = useState<boolean>(false);
@@ -70,10 +71,10 @@ export const UpdatePost: React.FC = () => {
       component: 'Select',
       placeholder: 'Chọn loại',
       options: [
-        { value: '1', label: 'Writing' },
-        { value: '2', label: 'Listening' },
-        { value: '3', label: 'Reading' },
-        { value: '4', label: 'Different' }
+        { value: 1, label: 'Writing' },
+        { value: 2, label: 'Listening' },
+        { value: 3, label: 'Reading' },
+        { value: 4, label: 'Different' }
       ]
     },
     band: {
@@ -243,22 +244,42 @@ export const UpdatePost: React.FC = () => {
                     <div className="w-full text-end text-zinc-400 mb-3 italic">
                       {moment(valueFormField?.createdDate).format('HH:mm DD/MM/YYYY')}
                     </div>
-                    <div className="font-semibold underline text-second-color italic">English:</div>
-                    <div
-                      className="mb-2"
-                      dangerouslySetInnerHTML={{ __html: valueFormField?.content || '' }}></div>
                     <div className="flex justify-center">
-                      <span
-                        className={`cursor-pointer underline text-color-border-2 ${
-                          showTranslate ? '' : 'animate-bounce'
-                        }`}
-                        onClick={() => setShowTranslate(!showTranslate)}>
-                        {showTranslate ? 'Thu gọn bản dịch' : 'Xem bản dịch'}
-                      </span>
+                      <img src={valueFormField?.image} className="object-contain max-w-[360px]" />
                     </div>
+                    <div className="grid grid-rows-1 grid-cols-6 gap-4 mt-4">
+                      <div
+                        className={`${
+                          showTranslate ? 'col-span-3' : 'col-span-6'
+                        } rounded-xl p-3 shadow-2xl`}>
+                        <div className="font-semibold underline text-second-color italic">
+                          English:
+                        </div>
+                        <div
+                          className="mb-2"
+                          dangerouslySetInnerHTML={{ __html: valueFormField?.content || '' }}></div>
+                        <div className="flex justify-center mt-2">
+                          <span
+                            className={`cursor-pointer underline text-color-border-2 ${
+                              showTranslate ? '' : 'animate-bounce'
+                            }`}
+                            onClick={() => setShowTranslate(!showTranslate)}>
+                            {showTranslate ? (
+                              <div>
+                                {/* <SiGoogletranslate /> */}
+                                Thu gọn bản dịch
+                              </div>
+                            ) : (
+                              'Xem bản dịch'
+                            )}
+                          </span>
+                        </div>
+                      </div>
 
-                    {showTranslate && (
-                      <div>
+                      <div
+                        className={`${
+                          showTranslate ? 'col-span-3' : 'hidden'
+                        } rounded-xl p-3 shadow-2xl`}>
                         <div className="font-semibold underline text-second-color italic">
                           Vietnamese:
                         </div>
@@ -268,9 +289,9 @@ export const UpdatePost: React.FC = () => {
                             __html: valueFormField?.translate || ''
                           }}></div>
                       </div>
-                    )}
+                    </div>
 
-                    <div className="mt-4">
+                    <div className="mt-6">
                       <PhraseComp id={id ? id : ''} />
                     </div>
                   </div>
