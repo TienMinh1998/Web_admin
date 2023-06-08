@@ -125,7 +125,7 @@ export const FormFieldComponent: React.FC<TFormField> = ({ formField, formik }) 
                   className="w-full"
                   as={Component}
                   onChange={(value: number) => {
-                    formik.setFieldValue(field.nameField, value);
+                    formik.setFieldValue(`clone_${field.nameField}`, value);
                   }}
                 />
                 <ErrorMessage name={field.nameField}>

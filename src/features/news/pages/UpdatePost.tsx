@@ -110,7 +110,11 @@ export const UpdatePost: React.FC = () => {
 
   const onHandleSubmit = async (values: any) => {
     try {
-      const dataPush = { ...values };
+      const dataPush = {
+        ...values,
+        translate: values.clone_translate ? values.clone_translate : values.translate,
+        content: values.clone_content ? values.clone_content : values.translate
+      };
       const formData = new FormData();
       Object.keys(dataPush).map((key: any) => {
         if (!dataPush[key]) return;

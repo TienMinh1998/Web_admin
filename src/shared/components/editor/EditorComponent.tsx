@@ -38,7 +38,7 @@ const EditorComponent: React.FC<IProps> = ({
     'history'
   ];
 
-  const [editorState, setEditorState] = useState<EditorState>();
+  const [editorState, setEditorState] = useState<EditorState>(EditorState.createEmpty());
 
   const onEditorStateChange = (editorState: EditorState) => {
     onChange(draftToHtml(convertToRaw(editorState.getCurrentContent())));
@@ -70,4 +70,3 @@ const EditorComponent: React.FC<IProps> = ({
 };
 
 export default EditorComponent;
-103868382363;
