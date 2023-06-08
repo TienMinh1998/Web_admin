@@ -187,20 +187,29 @@ export const UpdatePost: React.FC = () => {
             return (
               <Form>
                 <WhiteBoxWrapper className="relative bottom-0 flex justify-between items-center flex-1">
-                  {allowEdit ? (
-                    <div className="flex justify-between items-center w-full">
-                      <div className="font-semibold text-xl">Thêm bài viết</div>
+                  <div className="task-name italic">
+                    {id ? (
                       <div>
-                        <Button type="primary" htmlType="submit" className="bg-[#1677ff]">
-                          Lưu
-                        </Button>
+                        <span className="font-semibold">Đề bài:</span> {valueFormField?.taskName}
                       </div>
-                    </div>
-                  ) : (
-                    <div className="task-name italic">
-                      <span className="font-semibold">Đề bài:</span> {valueFormField?.taskName}
-                    </div>
-                  )}
+                    ) : (
+                      <span className="font-semibold text-xl">Thêm bài viết</span>
+                    )}
+                  </div>
+
+                  <div>
+                    {allowEdit && (
+                      <Button type="primary" htmlType="submit" className="bg-[#1677ff]">
+                        Lưu
+                      </Button>
+                    )}
+
+                    {!allowEdit && (
+                      <Button type="primary" onClick={goToEdit} className="bg-[#1677ff]">
+                        Sửa
+                      </Button>
+                    )}
+                  </div>
                 </WhiteBoxWrapper>
                 {allowEdit ? (
                   <div className="grid grid-rows-1 grid-cols-4 gap-4 mt-2 ">
@@ -232,13 +241,6 @@ export const UpdatePost: React.FC = () => {
                   </div>
                 ) : (
                   <div className="bg-white py-10 px-6 text-lg">
-                    <div className="flex justify-end items-center">
-                      {!allowEdit && (
-                        <Button type="primary" onClick={goToEdit} className="bg-[#1677ff]">
-                          Sửa
-                        </Button>
-                      )}
-                    </div>
                     <div className="text-center font-semibold text-3xl mt-3">
                       {valueFormField?.title}
                     </div>
