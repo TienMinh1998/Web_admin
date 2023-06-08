@@ -151,11 +151,6 @@ export const UpdatePost: React.FC = () => {
     }
   };
 
-  const pageTitle = () => {
-    if (id) return 'Cập nhật';
-    return 'Thêm';
-  };
-
   const goToEdit = () => {
     navigate(`${PROTECTED_ROUTES_PATH.POST}/edit/${id}`);
   };
@@ -192,19 +187,20 @@ export const UpdatePost: React.FC = () => {
             return (
               <Form>
                 <WhiteBoxWrapper className="relative bottom-0 flex justify-between items-center flex-1">
-                  <span className="text-lg font-bold">{pageTitle() + ' bài viết'}</span>
-                  <div>
-                    {allowEdit && (
-                      <Button type="primary" htmlType="submit" className="bg-[#1677ff]">
-                        Lưu
-                      </Button>
-                    )}
-                    {!allowEdit && (
-                      <Button type="primary" onClick={goToEdit} className="bg-[#1677ff]">
-                        Sửa
-                      </Button>
-                    )}
-                  </div>
+                  {allowEdit ? (
+                    <div className="flex justify-between items-center w-full">
+                      <div className="font-semibold text-xl">Thêm bài viết</div>
+                      <div>
+                        <Button type="primary" htmlType="submit" className="bg-[#1677ff]">
+                          Lưu
+                        </Button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="task-name italic">
+                      <span className="font-semibold">Đề bài:</span> {valueFormField?.taskName}
+                    </div>
+                  )}
                 </WhiteBoxWrapper>
                 {allowEdit ? (
                   <div className="grid grid-rows-1 grid-cols-4 gap-4 mt-2 ">
@@ -236,12 +232,14 @@ export const UpdatePost: React.FC = () => {
                   </div>
                 ) : (
                   <div className="bg-white py-10 px-6 text-lg">
-                    <div className="line-task-name">
-                      <span className="task-name italic">
-                        <span className="font-semibold">Đề bài:</span> {valueFormField?.taskName}
-                      </span>
+                    <div className="flex justify-end items-center">
+                      {!allowEdit && (
+                        <Button type="primary" onClick={goToEdit} className="bg-[#1677ff]">
+                          Sửa
+                        </Button>
+                      )}
                     </div>
-                    <div className="text-center font-semibold text-3xl mt-6">
+                    <div className="text-center font-semibold text-3xl mt-3">
                       {valueFormField?.title}
                     </div>
                     <div className="text-center">({valueFormField?.definetion})</div>

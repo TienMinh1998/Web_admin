@@ -61,15 +61,15 @@
 }
 
 .line-task-name {
-  background-color: wheat;
+  /* background-color: wheat;
+  border: 1px solid #797979; */
   padding: 16px;
-  border: 1px solid #797979;
   border-radius: 12px;
 }
 
 .task-name {
   padding: 10px;
-  background-color: wheat;
+  /* background-color: wheat; */
   font-weight: inherit;
   border-radius: 2px;
   margin-bottom: 10px;
