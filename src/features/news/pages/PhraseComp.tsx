@@ -145,7 +145,7 @@ export const PhraseComp: React.FC<Props> = ({ id }) => {
       width: '35%',
       editable: true,
       render: (value: string | number) => {
-        return <div className="text-orange-400 font-semibold">{value}</div>;
+        return <div className="text-blue-950 font-semibold">{value}</div>;
       }
     },
     {

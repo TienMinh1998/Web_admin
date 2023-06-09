@@ -25,7 +25,7 @@ export const PostPage: React.FC = () => {
     useTableData({
       expandFilter,
       fetchList: requestPosts,
-      pageSize: 100
+      pageSize: 18
     });
   const formFilter = {
     title: {
@@ -109,9 +109,10 @@ export const PostPage: React.FC = () => {
       <WhiteBoxWrapper>
         <Pagination
           defaultCurrent={paging.currentPage}
+          pageSize={paging.pageSize}
           total={paging.total}
           onChange={(page: number) => {
-            setExpandFilter({ ...expandFilter, page });
+            setExpandFilter({ ...expandFilter, pageIndex: page, pageNumber: page });
           }}
         />
       </WhiteBoxWrapper>

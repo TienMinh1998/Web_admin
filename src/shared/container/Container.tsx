@@ -71,7 +71,7 @@ export const Container = ({ children }: { children?: React.ReactNode }) => {
     <div className=" w-screen h-screen flex">
       <Head title={titleWeb + ' | English Admin'} />
 
-      <div className="bg-second-color h-full text-white nav-menu active ">
+      <div className="bg-second-color h-full text-white nav-menu ">
         <Sidebar />
       </div>
       <div className="w-full flex flex-col grow">

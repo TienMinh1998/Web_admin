@@ -30,11 +30,14 @@ export const useTableData = ({ expandFilter = {}, fetchList, pageSize = 10 }: IU
         });
 
         setDataSource(data?.items || []);
+        console.log('paging', paging);
+        console.log('data?.totalCount: ', data?.totalCount);
+        console.log('data?.currentPage: ', data?.currentPage);
 
         setPaging({
           ...paging,
           total: data?.totalCount,
-          currentPage: data?.currentPage
+          currentPage: data?.currentPage + 1
         });
       }
     } catch (error) {
