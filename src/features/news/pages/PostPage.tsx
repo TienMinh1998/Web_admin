@@ -106,16 +106,7 @@ export const PostPage: React.FC = () => {
           <FilterPage filters={formFilter} />
         </>
       </HeaderPage>
-      <WhiteBoxWrapper>
-        <Pagination
-          defaultCurrent={paging.currentPage}
-          pageSize={paging.pageSize}
-          total={paging.total}
-          onChange={(page: number) => {
-            setExpandFilter({ ...expandFilter, pageIndex: page, pageNumber: page });
-          }}
-        />
-      </WhiteBoxWrapper>
+
       <Loadingv1 loading={loading}>
         {dataSource.length > 0 ? (
           <div className="grid grid-cols-12 gap-x-2 gap-y-4 mt-4">
@@ -129,6 +120,16 @@ export const PostPage: React.FC = () => {
           </div>
         )}
       </Loadingv1>
+      <WhiteBoxWrapper className="p-2 mt-4 flex justify-end">
+        <Pagination
+          defaultCurrent={paging.currentPage}
+          pageSize={paging.pageSize}
+          total={paging.total}
+          onChange={(page: number) => {
+            setExpandFilter({ ...expandFilter, pageIndex: page, pageNumber: page });
+          }}
+        />
+      </WhiteBoxWrapper>
     </div>
   );
 };

@@ -13,7 +13,6 @@ import { WhiteBoxWrapper } from 'shared/components/common';
 import * as Yup from 'yup';
 import { requestCreatePost, requestDetailPost, requestUpdatePost } from '../api/post.api';
 import { PhraseComp } from './PhraseComp';
-import EditorComponent from 'shared/components/editor/EditorComponent';
 
 const validateSchema = {
   title: Yup.string().required('Hãy nhập tiêu đề'),
