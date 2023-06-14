@@ -10,7 +10,7 @@ type Props = {
 export const HeaderPage: React.FC<Props> = ({ children, className = '', title, extraButton }) => {
   return (
     <div className={`sticky top-0 ${className}`}>
-      <WhiteBoxWrapper>
+      <WhiteBoxWrapper className="p-2">
         <div className="flex justify-between">
           <div className="text-lg font-semibold">{title}</div>
           {extraButton}

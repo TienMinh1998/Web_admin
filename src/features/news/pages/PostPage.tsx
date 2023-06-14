@@ -1,10 +1,8 @@
 import { DatePicker, Empty, Input, Pagination, Select } from 'antd';
 import moment from 'moment';
 import React, { useState } from 'react';
-import { BiPlusCircle } from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';
 import { PROTECTED_ROUTES_PATH } from 'routes/RoutesPath';
-import { Button } from 'shared/components/Button';
 import { Loadingv1 } from 'shared/components/Loading';
 import { HeaderPage, WhiteBoxWrapper } from 'shared/components/common';
 import FilterPage from 'shared/components/common/FilterPage';
@@ -25,7 +23,7 @@ export const PostPage: React.FC = () => {
     useTableData({
       expandFilter,
       fetchList: requestPosts,
-      pageSize: 18
+      pageSize: 24
     });
   const formFilter = {
     title: {
@@ -65,7 +63,7 @@ export const PostPage: React.FC = () => {
     },
     date: {
       label: 'From Date / To Date',
-      className: 'col-span-6',
+      className: 'col-span-4',
       component: (
         <RangePicker
           style={{ width: '95%' }}
@@ -91,35 +89,26 @@ export const PostPage: React.FC = () => {
   };
 
   return (
-    <div className="p-2">
-      <HeaderPage
-        title="Danh sách các bài viết"
-        extraButton={
-          <div className="flex">
-            <Button className="mr-4 flex items-center justify-center" onClick={goToCreateProduct}>
-              <BiPlusCircle className="mr-1" />
-              Thêm bài viết
-            </Button>
-          </div>
-        }>
-        <>
-          <FilterPage filters={formFilter} />
-        </>
+    <div className="p-2 flex flex-col h-full">
+      <HeaderPage title="" extraButton={<div className="flex"></div>}>
+        <FilterPage filters={formFilter} goToCreateProduct={goToCreateProduct} />
       </HeaderPage>
 
-      <Loadingv1 loading={loading}>
-        {dataSource.length > 0 ? (
-          <div className="grid grid-cols-12 gap-x-2 gap-y-4 mt-4">
-            {dataSource?.map((item: any) => (
-              <PostComp key={item._id} data={item} fetchDataSource={fetchDataSource} />
-            ))}
-          </div>
-        ) : (
-          <div className="bg-white p-4 flex justify-center items-center w-full">
-            <Empty />
-          </div>
-        )}
-      </Loadingv1>
+      <div className="flex-1">
+        <Loadingv1 loading={loading}>
+          {dataSource.length > 0 ? (
+            <div className="grid grid-cols-12 gap-x-2 gap-y-4">
+              {dataSource?.map((item: any) => (
+                <PostComp key={item._id} data={item} fetchDataSource={fetchDataSource} />
+              ))}
+            </div>
+          ) : (
+            <div className="bg-white p-4 flex justify-center items-center w-full">
+              <Empty />
+            </div>
+          )}
+        </Loadingv1>
+      </div>
       <WhiteBoxWrapper className="p-2 mt-4 flex justify-end">
         <Pagination
           defaultCurrent={paging.currentPage}

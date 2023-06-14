@@ -105,7 +105,7 @@ export const UpdatePost: React.FC = () => {
     if (id) {
       getDetailData();
     }
-  }, []);
+  }, [id]);
 
   const onHandleSubmit = async (values: any) => {
     try {

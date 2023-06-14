@@ -67,6 +67,7 @@ export const PhraseComp: React.FC<Props> = ({ id }) => {
       expandFilter,
       fetchList: requestPhrases
     });
+
   const handleClickDelete = async (id: string) => {
     try {
       await requestDeletePhrase(id);

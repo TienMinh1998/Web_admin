@@ -33,16 +33,6 @@ const MENU: Array<TGroupMenu> = [
         icon: <BsFillPatchQuestionFill />
       }
     ]
-  },
-  {
-    keyGroup: '3',
-    groupMenu: [
-      {
-        title: 'Post',
-        to: PROTECTED_ROUTES_PATH.POST,
-        icon: <BsNewspaper />
-      }
-    ]
   }
 ];
 

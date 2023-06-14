@@ -34,7 +34,7 @@ export const useTableData = ({ expandFilter = {}, fetchList, pageSize = 10 }: IU
         setPaging({
           ...paging,
           total: data?.totalCount,
-          currentPage: data?.currentPage + 1
+          currentPage: data?.currentPage
         });
       }
     } catch (error) {

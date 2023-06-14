@@ -12,7 +12,7 @@ import { PostPage, UpdatePost } from 'features/news';
 export const ProtectedRoutes: RouteObject[] = [
   {
     path: PROTECTED_ROUTES_PATH.HOME,
-    element: <HomePage />
+    element: <PostPage />
   },
   {
     path: PROTECTED_ROUTES_PATH.QUESTION,
