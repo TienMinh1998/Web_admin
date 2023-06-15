@@ -109,7 +109,7 @@ export const CoursePage: React.FC = () => {
 
   const handleClickDelete = async (id: number) => {
     try {
-      await requestDeleteCourse(id);
+      const res = await requestDeleteCourse(id);
       toast.success('Xóa khóa học thành công!');
       fetchDataSource();
     } catch (error) {

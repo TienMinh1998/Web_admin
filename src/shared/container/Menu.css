@@ -5,9 +5,11 @@
   overflow-x: hidden;
   transition: 0.5s;
 }
+
 .active {
   width: 350px;
 }
+
 @media only screen and (max-width: 756px) {
   .active {
     width: 450px;
@@ -17,10 +19,21 @@
 .scrollbar-menu::-webkit-scrollbar {
   width: 6px;
 }
+
 .scrollbar-menu::-webkit-scrollbar-track {
   background: #0e3253;
 }
 
 .scrollbar-menu::-webkit-scrollbar-thumb {
   background: #32618d;
+}
+
+.listpost-title {
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.listpost-title:hover {
+  font-size: 20;
+  color: yellowgreen;
 }

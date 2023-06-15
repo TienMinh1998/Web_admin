@@ -33,7 +33,9 @@ export const Container = ({ children }: { children?: React.ReactNode }) => {
           </Breadcrumb.Item>
         ))}
 
-        {newList.length === 0 && <Breadcrumb.Item className="cursor-pointer">Home</Breadcrumb.Item>}
+        {newList.length === 0 && <Breadcrumb.Item className="cursor-pointer">
+          <div className='listpost-title'>Danh sách các bài viết Tiếng Anh, IELTS, Công nghệ thông tin, Note và nhật kí quan trọng</div>
+        </Breadcrumb.Item>}
       </Breadcrumb>
     );
   };
@@ -99,7 +101,7 @@ export const Container = ({ children }: { children?: React.ReactNode }) => {
             <div className="border border-border-color--1 bg-border-color--1 mx-2"></div>
             <div>
               <Avatar style={{ width: 36, height: 36 }} src={R.images.ava_admin} />
-              <span className="ml-2 font-semibold">Super Admin</span>
+              <span className="ml-2 font-semibold">Nguyễn Viết Minh Tiến</span>
             </div>
           </div>
         </div>
