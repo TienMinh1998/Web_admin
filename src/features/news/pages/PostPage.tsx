@@ -14,6 +14,7 @@ const { RangePicker } = DatePicker;
 const { Search } = Input;
 
 export const PostPage: React.FC = () => {
+
   const navigate = useNavigate();
   const [searchText, setSearchText] = useState<string>('');
   const [expandFilter, setExpandFilter] = useState<any>({

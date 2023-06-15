@@ -187,6 +187,11 @@ export const UpdatePost: React.FC = () => {
               <Form>
                 <WhiteBoxWrapper className="relative bottom-0 flex justify-between items-center flex-1">
                   <div className="task-name italic">
+                    <div>
+                      <Button type="primary" onClick={() => navigate(-1)} className="bg-[#1677ff]">
+                        Back
+                      </Button>
+                    </div>
                     {id ? (
                       <div>
                         <span className="font-semibold">Đề bài:</span> {valueFormField?.taskName}
@@ -252,9 +257,8 @@ export const UpdatePost: React.FC = () => {
                     </div>
                     <div className="grid grid-rows-1 grid-cols-6 gap-4 mt-4">
                       <div
-                        className={`${
-                          showTranslate ? 'col-span-3' : 'col-span-6'
-                        } rounded-xl p-3 shadow-2xl`}>
+                        className={`${showTranslate ? 'col-span-3' : 'col-span-6'
+                          } rounded-xl p-3 shadow-2xl`}>
                         <div className="font-semibold underline text-second-color italic">
                           English:
                         </div>
@@ -263,9 +267,8 @@ export const UpdatePost: React.FC = () => {
                           dangerouslySetInnerHTML={{ __html: valueFormField?.content || '' }}></div>
                         <div className="flex justify-center mt-2">
                           <span
-                            className={`cursor-pointer underline text-color-border-2 ${
-                              showTranslate ? '' : 'animate-bounce'
-                            }`}
+                            className={`cursor-pointer underline text-color-border-2 ${showTranslate ? '' : 'animate-bounce'
+                              }`}
                             onClick={() => setShowTranslate(!showTranslate)}>
                             {showTranslate ? (
                               <div>
@@ -280,9 +283,8 @@ export const UpdatePost: React.FC = () => {
                       </div>
 
                       <div
-                        className={`${
-                          showTranslate ? 'col-span-3' : 'hidden'
-                        } rounded-xl p-3 shadow-2xl`}>
+                        className={`${showTranslate ? 'col-span-3' : 'hidden'
+                          } rounded-xl p-3 shadow-2xl`}>
                         <div className="font-semibold underline text-second-color italic">
                           Vietnamese:
                         </div>

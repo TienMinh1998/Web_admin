@@ -11,6 +11,11 @@ export const Sidebar: React.FC = () => {
   const goToHomePage = () => {
     navigate(PROTECTED_ROUTES_PATH.HOME);
   };
+
+
+  const goToTestPage = () => {
+    navigate('/test');
+  };
   return (
     <div className="h-full w-full text-white overflow-y-auto flex flex-col justify-between">
       <div className="border-b border-color-border-2">
@@ -28,6 +33,7 @@ export const Sidebar: React.FC = () => {
       </div>
 
       <Menu />
+      <button onClick={goToTestPage}>TEST</button>
     </div>
   );
 };

@@ -4,7 +4,7 @@ export const PROTECTED_ROUTES_PATH = {
   COURSE: '/course',
   QUESTION: '/question',
   NOTIFICATION: '/notification',
-  POST: '/post'
+  POST: '/post',
 };
 
 export const PUBLIC_ROUTES_PATH = {

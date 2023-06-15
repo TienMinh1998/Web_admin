@@ -6,6 +6,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { Container } from 'shared/container/Container';
 import { magicRoutes } from 'shared/utils/magicRoutes';
 import ProtectedRoute, { ProtectedRoutes } from './ProtectedRoutes';
+import { HomePage } from 'features/home';
 
 const Body = ({ children }: { children: React.ReactNode }) => {
   return <div className="w-screen h-screen bg-body-main flex justify-center">{children}</div>;
@@ -29,6 +30,7 @@ export const AppRoutes = () => {
         ))}
         <Route path="*" element={<Page404 />} />
         <Route path={'/login'} element={<Login />} />
+        <Route path={'/test'} element={<HomePage />}></Route>
       </Routes>
     </Body>
   );
