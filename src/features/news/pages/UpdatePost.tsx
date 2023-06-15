@@ -2,7 +2,7 @@ import { Button } from 'antd';
 import { Form, Formik, FormikProps } from 'formik';
 import moment from 'moment';
 import React, { useEffect, useMemo, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { PROTECTED_ROUTES_PATH } from 'routes/RoutesPath';
 import { UploadImageButton } from 'shared/components/Button';
@@ -21,6 +21,7 @@ const validateSchema = {
 export const UpdatePost: React.FC = () => {
   const { id, mode } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [loading, setLoading] = useState<boolean>(false);
   const [valueFormField, setValueFormField] = useState({
@@ -127,11 +128,11 @@ export const UpdatePost: React.FC = () => {
       if (id) {
         await requestUpdatePost(dataPush);
         toast.success('Cập nhật bài viết thành công!');
-        navigate(PROTECTED_ROUTES_PATH.POST);
+        navigate(PROTECTED_ROUTES_PATH.POST, { state: { ...location.state } });
       } else {
         await requestCreatePost(formData);
         toast.success('Thêm bài viết thành công!');
-        navigate(PROTECTED_ROUTES_PATH.POST);
+        navigate(PROTECTED_ROUTES_PATH.POST, { state: { ...location.state } });
       }
     } catch (error) {
       console.error('Exception ' + error);
@@ -188,7 +189,12 @@ export const UpdatePost: React.FC = () => {
                 <WhiteBoxWrapper className="relative bottom-0 flex justify-between items-center flex-1">
                   <div className="task-name italic">
                     <div>
-                      <Button type="primary" onClick={() => navigate(-1)} className="bg-[#1677ff]">
+                      <Button
+                        type="primary"
+                        onClick={() => {
+                          navigate(PROTECTED_ROUTES_PATH.POST, { state: { ...location.state } });
+                        }}
+                        className="bg-[#1677ff]">
                         Back
                       </Button>
                     </div>
@@ -257,8 +263,9 @@ export const UpdatePost: React.FC = () => {
                     </div>
                     <div className="grid grid-rows-1 grid-cols-6 gap-4 mt-4">
                       <div
-                        className={`${showTranslate ? 'col-span-3' : 'col-span-6'
-                          } rounded-xl p-3 shadow-2xl`}>
+                        className={`${
+                          showTranslate ? 'col-span-3' : 'col-span-6'
+                        } rounded-xl p-3 shadow-2xl`}>
                         <div className="font-semibold underline text-second-color italic">
                           English:
                         </div>
@@ -267,8 +274,9 @@ export const UpdatePost: React.FC = () => {
                           dangerouslySetInnerHTML={{ __html: valueFormField?.content || '' }}></div>
                         <div className="flex justify-center mt-2">
                           <span
-                            className={`cursor-pointer underline text-color-border-2 ${showTranslate ? '' : 'animate-bounce'
-                              }`}
+                            className={`cursor-pointer underline text-color-border-2 ${
+                              showTranslate ? '' : 'animate-bounce'
+                            }`}
                             onClick={() => setShowTranslate(!showTranslate)}>
                             {showTranslate ? (
                               <div>
@@ -283,8 +291,9 @@ export const UpdatePost: React.FC = () => {
                       </div>
 
                       <div
-                        className={`${showTranslate ? 'col-span-3' : 'hidden'
-                          } rounded-xl p-3 shadow-2xl`}>
+                        className={`${
+                          showTranslate ? 'col-span-3' : 'hidden'
+                        } rounded-xl p-3 shadow-2xl`}>
                         <div className="font-semibold underline text-second-color italic">
                           Vietnamese:
                         </div>
