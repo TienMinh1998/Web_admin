@@ -1,7 +1,7 @@
 import { DatePicker, Empty, Input, Pagination, Select } from 'antd';
 import moment from 'moment';
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { PROTECTED_ROUTES_PATH } from 'routes/RoutesPath';
 import { Loadingv1 } from 'shared/components/Loading';
 import { HeaderPage, WhiteBoxWrapper } from 'shared/components/common';
@@ -14,8 +14,9 @@ const { RangePicker } = DatePicker;
 const { Search } = Input;
 
 export const PostPage: React.FC = () => {
-
   const navigate = useNavigate();
+  const location = useLocation();
+
   const [searchText, setSearchText] = useState<string>('');
   const [expandFilter, setExpandFilter] = useState<any>({
     search: { title: undefined, startDate: undefined, endDate: undefined }
@@ -33,6 +34,7 @@ export const PostPage: React.FC = () => {
       component: (
         <Search
           placeholder="Tìm kiếm bài viết"
+          value={expandFilter?.search?.tilte}
           onChange={(e) => {
             setSearchText(e.target.value);
           }}
@@ -50,6 +52,7 @@ export const PostPage: React.FC = () => {
           style={{ width: '95%' }}
           allowClear
           placeholder="Chọn loại"
+          value={expandFilter?.search?.type}
           options={[
             { value: '1', label: 'Writing' },
             { value: '2', label: 'Listening' },
@@ -70,6 +73,7 @@ export const PostPage: React.FC = () => {
           style={{ width: '95%' }}
           allowClear
           format="DD/MM/YYYY"
+          value={[expandFilter?.search?.startDate, expandFilter?.search?.endDate]}
           placeholder={['From Date', 'To Date']}
           onChange={(date: any, dateString) => {
             setExpandFilter({
@@ -85,8 +89,32 @@ export const PostPage: React.FC = () => {
       )
     }
   };
+
+  useEffect(() => {
+    setExpandFilter({ search: location.state });
+  }, []);
+
   const goToCreateProduct = () => {
     navigate(`${PROTECTED_ROUTES_PATH.POST}/add`);
+  };
+
+  const goToDetail = (id: number) => {
+    navigate(`${PROTECTED_ROUTES_PATH.POST}/detail/${id}`, {
+      state: { ...expandFilter.search }
+    });
+  };
+
+  const setSearchParams = (objSearch: any) => {
+    let searchParams = '';
+    Object.keys(objSearch).forEach((key: any, index: number) => {
+      if (objSearch['key'] === undefined || objSearch['key'] == null) return;
+      if (index === 0) {
+        searchParams += `?${key}=${objSearch['key']}`;
+      } else {
+        searchParams += `&${key}=${objSearch['key']}`;
+      }
+    });
+    return searchParams;
   };
 
   return (
@@ -100,7 +128,12 @@ export const PostPage: React.FC = () => {
           {dataSource.length > 0 ? (
             <div className="grid grid-cols-12 gap-x-2 gap-y-4">
               {dataSource?.map((item: any) => (
-                <PostComp key={item._id} data={item} fetchDataSource={fetchDataSource} />
+                <PostComp
+                  key={item._id}
+                  data={item}
+                  fetchDataSource={fetchDataSource}
+                  goToDetail={goToDetail}
+                />
               ))}
             </div>
           ) : (

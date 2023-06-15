@@ -1,18 +1,14 @@
-import { Button, Popconfirm, Rate, Tag, Tooltip } from 'antd';
+import { Popconfirm, Rate, Tag, Tooltip } from 'antd';
 import React from 'react';
+import { AiOutlineCloseCircle } from 'react-icons/ai';
 import { GrCircleInformation } from 'react-icons/gr';
-import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { PROTECTED_ROUTES_PATH } from 'routes/RoutesPath';
 import { requestDeletePost } from '../api/post.api';
 import '../style.css';
-import { AiOutlineCloseCircle } from 'react-icons/ai';
 
-type Props = { data: any; openModalUpdate?: (id: string) => void; fetchDataSource: any };
+type Props = { data: any; goToDetail?: any; fetchDataSource: any };
 
-export const PostComp: React.FC<Props> = ({ data, openModalUpdate, fetchDataSource }) => {
-  const navigate = useNavigate();
-
+export const PostComp: React.FC<Props> = ({ data, goToDetail, fetchDataSource }) => {
   const handleClickDelete = async () => {
     try {
       await requestDeletePost(data.id);
@@ -23,24 +19,17 @@ export const PostComp: React.FC<Props> = ({ data, openModalUpdate, fetchDataSour
     }
   };
 
-  const goToDetail = (id: number) => {
-    navigate(`${PROTECTED_ROUTES_PATH.POST}/detail/${id}`);
-  };
-
   return (
-    <div className="col-span-12 tablet:col-span-4 laptop:col-span-3 desktop:col-span-2 bg-white shadow-xl flex flex-col justify-between rounded-md text-base"
+    <div
+      className="col-span-12 tablet:col-span-4 laptop:col-span-3 desktop:col-span-2 bg-white shadow-xl flex flex-col justify-between rounded-md text-base"
       onClick={() => {
-        goToDetail(data?.id)
-      }}
-    >
+        goToDetail & goToDetail(data?.id);
+      }}>
       <div className="w-full aspect-square cursor-pointer relative wrap-img">
         <img src={data?.image} className="object-cover view-img" />
         <div className="above-img">
           <Tag color="blue">
-            <span style={{ padding: 5 }}>
-              Brand {data?.band * 2}
-            </span>
-
+            <span style={{ padding: 5 }}>Brand {data?.band * 2}</span>
           </Tag>
           <Popconfirm
             placement="bottom"
