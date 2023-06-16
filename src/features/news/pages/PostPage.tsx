@@ -54,6 +54,7 @@ export const PostPage: React.FC = () => {
           placeholder="Chọn loại"
           value={expandFilter?.search?.type}
           options={[
+            { value: '5', label: 'Vocabulary' },
             { value: '1', label: 'Writing' },
             { value: '2', label: 'Listening' },
             { value: '3', label: 'Reading' },

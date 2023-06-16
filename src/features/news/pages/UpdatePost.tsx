@@ -71,6 +71,7 @@ export const UpdatePost: React.FC = () => {
       component: 'Select',
       placeholder: 'Chọn loại',
       options: [
+        { value: 5, label: 'Vocabulary' },
         { value: 1, label: 'Writing' },
         { value: 2, label: 'Listening' },
         { value: 3, label: 'Reading' },
