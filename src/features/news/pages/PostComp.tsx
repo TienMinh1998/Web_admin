@@ -20,31 +20,41 @@ export const PostComp: React.FC<Props> = ({ data, goToDetail, fetchDataSource })
   };
 
   return (
-    <div
-      className="col-span-12 tablet:col-span-4 laptop:col-span-3 desktop:col-span-2 bg-white shadow-xl flex flex-col justify-between rounded-md text-base"
-      onClick={() => {
-        goToDetail & goToDetail(data?.id);
-      }}>
+    <div className="col-span-12 tablet:col-span-4 laptop:col-span-3 desktop:col-span-2 bg-white shadow-xl flex flex-col justify-between rounded-md text-base">
       <div className="w-full aspect-square cursor-pointer relative wrap-img">
         <img src={data?.image} className="object-cover view-img" />
-        <div className="above-img">
+        <div
+          className="above-img"
+          onClick={() => {
+            goToDetail & goToDetail(data?.id);
+          }}>
           <Tag color="blue">
             <span style={{ padding: 5 }}>Brand {data?.band * 2}</span>
           </Tag>
           <Popconfirm
             placement="bottom"
             title="Bạn có muốn xóa bài biết này?"
-            onConfirm={handleClickDelete}
+            onConfirm={() => {
+              handleClickDelete();
+            }}
             cancelText="Quay lại"
             okText="Xác nhận"
             okButtonProps={{ type: 'primary', danger: true }}>
-            <AiOutlineCloseCircle className="cursor-pointer text-red-500 absolute top-1 right-1" />
+            <AiOutlineCloseCircle
+              className="cursor-pointer text-red-500 absolute top-1 right-1"
+              onClick={(e: any) => {
+                e.stopPropagation();
+              }}
+            />
           </Popconfirm>
         </div>
 
         <span
           className="font-semibold block-ellipsis title-item p-1 absolute bottom-0 text-white"
-          title={data?.title}>
+          title={data?.title}
+          onClick={() => {
+            goToDetail & goToDetail(data?.id);
+          }}>
           {data?.title}
         </span>
       </div>
