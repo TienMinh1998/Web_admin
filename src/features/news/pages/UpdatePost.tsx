@@ -114,7 +114,7 @@ export const UpdatePost: React.FC = () => {
       const dataPush = {
         ...values,
         translate: values.clone_translate ? values.clone_translate : values.translate,
-        content: values.clone_content ? values.clone_content : values.translate
+        content: values.clone_content ? values.clone_content : values.content
       };
       const formData = new FormData();
       Object.keys(dataPush).map((key: any) => {
